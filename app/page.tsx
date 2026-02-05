@@ -1,60 +1,101 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
 
 export default function Home() {
+  const containerRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
-    // Reveal on Scroll Observer
-    const revealElements = document.querySelectorAll('.reveal-on-scroll');
-    const revealObserver = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('is-visible');
-          }
+    const ctx = gsap.context(() => {
+      // Reveal on Scroll Animations
+      const revealElements = document.querySelectorAll('.reveal-on-scroll');
+      revealElements.forEach((el) => {
+        gsap.fromTo(
+          el,
+          { opacity: 0, y: 30 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 1,
+            ease: 'power3.out',
+            scrollTrigger: {
+              trigger: el,
+              start: 'top 85%',
+              toggleActions: 'play none none reverse',
+            },
+          },
+        );
+      });
+
+      // Hero Text Staggered Reveal
+      const heroTitle = document.querySelector('.hero-title');
+      if (heroTitle) {
+        gsap.fromTo(
+          heroTitle,
+          { opacity: 0, y: 50, scale: 0.9 },
+          {
+            opacity: 1,
+            y: 0,
+            scale: 1,
+            duration: 1.5,
+            ease: 'expo.out',
+          },
+        );
+      }
+
+      // Project Image Hover Effects (Parallax/Scale)
+      const projectImages = document.querySelectorAll(
+        '.project-image-container',
+      );
+      projectImages.forEach((container) => {
+        const img = container.querySelector('img');
+        if (img) {
+          gsap.set(img, { scale: 1.0 });
+          container.addEventListener('mouseenter', () => {
+            gsap.to(img, { scale: 1.1, duration: 0.5, ease: 'power2.out' });
+          });
+          container.addEventListener('mouseleave', () => {
+            gsap.to(img, { scale: 1.0, duration: 0.5, ease: 'power2.out' });
+          });
+        }
+      });
+
+      // Active Nav State Scroll Spy using ScrollTrigger
+      const sectionsCode = ['about', 'projects', 'etcetra'];
+      sectionsCode.forEach((sectionId) => {
+        ScrollTrigger.create({
+          trigger: `#${sectionId}`,
+          start: 'top center',
+          end: 'bottom center',
+          onToggle: (self) => {
+            if (self.isActive) {
+              document.querySelectorAll('.nav-link').forEach((link) => {
+                link.classList.remove('text-primary');
+                link.classList.add('text-gray-500', 'dark:text-gray-400');
+              });
+              const activeLink = document.getElementById(`nav-${sectionId}`);
+              if (activeLink) {
+                activeLink.classList.remove(
+                  'text-gray-500',
+                  'dark:text-gray-400',
+                );
+                activeLink.classList.add('text-primary');
+              }
+            }
+          },
         });
-      },
-      { threshold: 0.1 },
-    );
-    revealElements.forEach((el) => revealObserver.observe(el));
-
-    // Active Nav State Scroll Spy
-    const sectionsCode = ['about', 'projects', 'etcetra'];
-    const navLinks = sectionsCode.map((id) =>
-      document.getElementById(`nav-${id}`),
-    );
-
-    const handleScroll = () => {
-      let current = '';
-      sectionsCode.forEach((section) => {
-        const el = document.getElementById(section);
-        if (el) {
-          const sectionTop = el.offsetTop;
-          // const sectionHeight = el.clientHeight; // unused in original logic
-          if (window.scrollY >= sectionTop - 300) {
-            current = section;
-          }
-        }
       });
+    }, containerRef);
 
-      navLinks.forEach((link) => {
-        if (link) {
-          link.classList.remove('text-primary');
-          link.classList.add('text-gray-500', 'dark:text-gray-400');
-          if (link.getAttribute('href')?.includes(current)) {
-            link.classList.remove('text-gray-500', 'dark:text-gray-400');
-            link.classList.add('text-primary');
-          }
-        }
-      });
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    return () => ctx.revert();
   }, []);
 
   return (
-    <>
+    <div ref={containerRef}>
       <nav className='fixed top-0 w-full z-50 bg-background-light/90 dark:bg-background-dark/90 backdrop-blur-md border-b border-border-light dark:border-border-dark px-6 py-4 flex justify-between items-center transition-all duration-300 shadow-sm'>
         <a
           className='text-primary font-display font-bold tracking-widest text-lg hover:scale-105 transition-transform cursor-pointer'
@@ -107,7 +148,7 @@ export default function Home() {
         <div className='absolute inset-0 bg-grid-light dark:bg-grid-dark bg-grid opacity-20 pointer-events-none z-0'></div>
         <div className='container mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-12 relative z-10 flex-grow'>
           <div className='flex flex-col justify-center'>
-            <div className='relative mb-8 reveal-on-scroll'>
+            <div className='relative mb-8 reveal-on-scroll hero-title'>
               <h1 className='text-7xl md:text-9xl font-display font-bold leading-none uppercase tracking-tighter'>
                 Sanjana
                 <br />
@@ -124,10 +165,7 @@ export default function Home() {
                 </svg>
               </div>
             </div>
-            <div
-              className='max-w-md text-gray-600 dark:text-gray-400 text-lg leading-relaxed mb-12 reveal-on-scroll'
-              style={{ transitionDelay: '200ms' }}
-            >
+            <div className='max-w-md text-gray-600 dark:text-gray-400 text-lg leading-relaxed mb-12 reveal-on-scroll'>
               I&apos;m a User Experience Designer, artist and storyteller. I
               believe in solving meaningful problems through elegant, creative
               solutions. My passion lies in the subtle intersection of art and
@@ -136,10 +174,7 @@ export default function Home() {
               <br />
               Currently studying Interaction Design, B.Des at UID, Gujarat
             </div>
-            <div
-              className='mt-auto pb-12 flex items-center space-x-4 reveal-on-scroll'
-              style={{ transitionDelay: '400ms' }}
-            >
+            <div className='mt-auto pb-12 flex items-center space-x-4 reveal-on-scroll'>
               <div className='h-10 w-0.5 bg-primary'></div>
               <span className='text-xs tracking-widest uppercase text-gray-500 font-bold'>
                 Scroll
@@ -149,10 +184,7 @@ export default function Home() {
               </span>
             </div>
           </div>
-          <div
-            className='flex flex-col border-l border-border-light dark:border-border-dark pl-0 lg:pl-12 pt-24 reveal-on-scroll'
-            style={{ transitionDelay: '300ms' }}
-          >
+          <div className='flex flex-col border-l border-border-light dark:border-border-dark pl-0 lg:pl-12 pt-24 reveal-on-scroll'>
             <div className='mb-12'>
               <h2 className='text-4xl md:text-5xl font-display font-bold leading-tight'>
                 Every Detail Tells A<br />
@@ -164,21 +196,21 @@ export default function Home() {
               </h2>
             </div>
             <div className='grid grid-cols-2 gap-4 mt-auto mb-12'>
-              <div className='aspect-video bg-gray-800 relative overflow-hidden group rounded-sm'>
+              <div className='aspect-video bg-gray-800 relative overflow-hidden group rounded-sm project-image-container'>
                 <img
                   alt='Design work sketch'
-                  className='w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-all duration-500 grayscale group-hover:grayscale-0 transform group-hover:scale-105'
+                  className='w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-all duration-500 grayscale group-hover:grayscale-0 transform'
                   src='https://lh3.googleusercontent.com/aida-public/AB6AXuD7BfwYkJ3wuAlEYcxseZvzLefQYzqAA4iH0dPyn4BdYhZN24dTL01WOHCrn3FP_L4Xmwg4dfQBHawF8g5CYK2RLRQ6OkfJbEJBr6g2FTQluSJww3W1SwMM-d4CKCRMPXMH2GdxNBW8IXSgKjCK6IPzo-qJIXxIxG3IAHSC81BIbrlwuSTB0kS_7XJBcEg0_mFOyU1ylgQJfWNpqeRXijIl6tD0oFtVehfcAii_J5bIK-vVa18cozT7PJoqnfSj4B4fqIFnQMm3jPLE'
                 />
               </div>
-              <div className='aspect-video bg-gray-800 relative overflow-hidden group rounded-sm'>
+              <div className='aspect-video bg-gray-800 relative overflow-hidden group rounded-sm project-image-container'>
                 <img
                   alt='Team collaboration'
-                  className='w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-all duration-500 grayscale group-hover:grayscale-0 transform group-hover:scale-105'
+                  className='w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-all duration-500 grayscale group-hover:grayscale-0 transform'
                   src='https://lh3.googleusercontent.com/aida-public/AB6AXuAqSao1pwF2Yzq9R9GxW1uatJTUCwn39iZw8PG1Dil7nrBas30T26LKQkJumeOjbJbMEUHlaW4ywsI7c8DBwCm1LOmrccghm1K5brY2bGI_2QO3G_CNCzzfFSaoIOj_UdbOnItuXMN_ybRnWs1upEZHrfxiG1W4C16C9EZtqxJKJmHnEFJ4qlpkD6O9xdIqF7A_aPKFq49RuNRFzoaLJVBb50nCDrd5nZHOgutlGQWmQkjppWjsZeS-P_Ay8b5VfFHE07Fy6uR8H5Sa'
                 />
               </div>
-              <div className='aspect-video bg-gray-900 relative overflow-hidden group cursor-pointer rounded-sm'>
+              <div className='aspect-video bg-gray-900 relative overflow-hidden group cursor-pointer rounded-sm project-image-container'>
                 <div className='absolute inset-0 flex items-center justify-center z-20 transition-opacity duration-300 group-hover:opacity-0'>
                   <span className='material-icons text-white mr-2'>
                     touch_app
@@ -189,14 +221,14 @@ export default function Home() {
                 </div>
                 <img
                   alt='Presentation'
-                  className='w-full h-full object-cover opacity-40 group-hover:opacity-100 transition-all duration-500 grayscale group-hover:grayscale-0 transform group-hover:scale-105'
+                  className='w-full h-full object-cover opacity-40 group-hover:opacity-100 transition-all duration-500 grayscale group-hover:grayscale-0 transform'
                   src='https://lh3.googleusercontent.com/aida-public/AB6AXuDByAZlq0YuAu_NWfEPItpBexhie27_nPbzic9qIc7xEaSVWMqLneVUM0pYQx5pR-1jcHGDZuf8O6fkmdCesDMEIyb6gTdGuYbSUtY9FssIeauSLMxILqXs8AIbCUCEgYUW7HHxjH_lOpnd3bMHa3VJt8YeSyhJ-YoUWQrI_SJSbOKSenY_d698g4pbGwPfYmQqjI7XNJ1AD_LN7KrtuKrcC9T0Q3Eox7UyhdAaG61B8ayuKbYpSFf-qqe-FT1MR8eu4EzLffOfP9iL'
                 />
               </div>
-              <div className='aspect-video bg-gray-800 relative overflow-hidden group rounded-sm'>
+              <div className='aspect-video bg-gray-800 relative overflow-hidden group rounded-sm project-image-container'>
                 <img
                   alt='Wireframing'
-                  className='w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-all duration-500 grayscale group-hover:grayscale-0 transform group-hover:scale-105'
+                  className='w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-all duration-500 grayscale group-hover:grayscale-0 transform'
                   src='https://lh3.googleusercontent.com/aida-public/AB6AXuDrKyl_SXfYwE425QFtax06f_VoRuRZaTMDM0nTEpdClw8w7IVGDm2W1siTNELDh9ApMyDteTEz5w0q5VPtFwnPjvsWX-G0DPmbt3CV-Pi2tEHf8bbC67a8CLzFf4jEHAIyf7Ts66rbH4Cdj7AsGmSnDZuaDGX4DdRbG_KwuFmk614xSB3R9TFSO-kOQ5Hug2ChgMwtbPF0PFoQiRfczbOby3y3ZsqVxXQcuenMKfMgHORYLCah4pIuV50li6kQjJ2B81eZulyrU0i2'
                 />
               </div>
@@ -257,19 +289,19 @@ export default function Home() {
                   <span className='text-sm font-medium'>3 months</span>
                 </div>
                 <div className='w-12 h-12 rounded-full border border-gray-600 flex items-center justify-center group-hover:bg-white group-hover:text-black group-hover:shadow-[0_0_15px_rgba(255,255,255,0.5)] transition-all duration-300 transform group-hover:scale-110'>
-                  <span className='material-icons transform rotate-[-45deg]'>
+                  <span className='material-icons transform -rotate-45'>
                     arrow_forward
                   </span>
                 </div>
               </div>
             </div>
             <div className='lg:col-span-8 bg-surface-dark relative overflow-hidden flex items-center justify-center p-8'>
-              <div className='absolute inset-0 bg-gradient-to-br from-black via-gray-900 to-black opacity-90 transition-opacity group-hover:opacity-100'></div>
+              <div className='absolute inset-0 bg-linear-to-br from-black via-gray-900 to-black opacity-90 transition-opacity group-hover:opacity-100'></div>
               <div className='absolute top-10 right-10 w-64 h-64 bg-gray-800 rounded-full mix-blend-overlay filter blur-3xl opacity-30 group-hover:opacity-50 transition-opacity duration-700'></div>
-              <div className='relative z-10 w-full max-w-4xl flex items-center justify-center space-x-8'>
+              <div className='relative z-10 w-full max-w-4xl flex items-center justify-center space-x-8 project-image-container'>
                 <img
                   alt='Mobile App Mockup'
-                  className='h-[400px] w-auto object-contain rounded-3xl shadow-2xl transform group-hover:scale-105 group-hover:-rotate-2 transition-transform duration-500'
+                  className='h-[400px] w-auto object-contain rounded-3xl shadow-2xl transform'
                   src='https://lh3.googleusercontent.com/aida-public/AB6AXuAlmBnqxDIGkyaRz5CIIlAXGjnekmVgmaLmLXInLYWMiAYL3uldmjk9TOAxh9DnFF9eQvJhCOYF8R3BYFp8i_O4MJ7WbmvpF9_jxGmkM8FqeP3bIZvQG52A5Ldu33nNFHgqN_batKo0mJ8bgoqIfwAC5bWD8GOv_BPPan7bExe0_tSn_HR08SSeiTPJpRzHniHFHtmkgu0qnQMccxTvlTcNrreZAPxSPRtPoflY3eEGc-YUdqJoJQhoRESjZ4PTkTocz0x3uYW2CoNc'
                 />
                 <div className='hidden md:block text-gray-300 max-w-xs transform translate-y-4 opacity-80 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 delay-100'>
@@ -311,18 +343,18 @@ export default function Home() {
                   <span className='text-sm font-medium'>2 months</span>
                 </div>
                 <div className='w-12 h-12 rounded-full border border-gray-600 flex items-center justify-center group-hover:bg-white group-hover:text-black group-hover:shadow-[0_0_15px_rgba(255,255,255,0.5)] transition-all duration-300 transform group-hover:scale-110'>
-                  <span className='material-icons transform rotate-[-45deg]'>
+                  <span className='material-icons transform -rotate-45'>
                     arrow_forward
                   </span>
                 </div>
               </div>
             </div>
             <div className='lg:col-span-8 bg-surface-dark relative overflow-hidden flex items-center justify-center p-8'>
-              <div className='absolute inset-0 bg-gradient-to-bl from-gray-900 via-black to-gray-900 opacity-90'></div>
-              <div className='relative z-10 w-full max-w-4xl flex items-center justify-center space-x-8'>
+              <div className='absolute inset-0 bg-linear-to-bl from-gray-900 via-black to-gray-900 opacity-90'></div>
+              <div className='relative z-10 w-full max-w-4xl flex items-center justify-center space-x-8 project-image-container'>
                 <img
                   alt='Sahayak App Mockup'
-                  className='h-[400px] w-auto object-contain rounded-3xl shadow-2xl transform group-hover:-translate-y-4 group-hover:scale-105 transition-transform duration-500'
+                  className='h-[400px] w-auto object-contain rounded-3xl shadow-2xl transform'
                   src='https://lh3.googleusercontent.com/aida-public/AB6AXuBIGqsINpCsqNyBlBEKSgsJR_HvTgVqrUg0iWD2pkEw2lnG5b9chFl1P9OfiK7gkU_14U8_gvj0YBZnP65qz5pT1AJw5iZXTBUEmojQlTZhPatF4M5vXJJeUf2jcNfUT7mjzXlrPSiSdGdnn2hDSxOhhcRRFtycjuSkUkVGCLLP61adr8nlfkCX-KsnYyuDrItHXEa3Cl-PzDJpprooJnDDpxOEt4lpV69wALdbaCbTv7b2oOR7Qblzqax0fCDDx3KDPS5f-pYNgGfl'
                 />
                 <div className='hidden md:block bg-white text-black p-6 rounded-lg shadow-lg max-w-xs transform translate-y-12 group-hover:translate-y-8 transition-transform duration-500'>
@@ -356,7 +388,7 @@ export default function Home() {
                   <span className='text-sm font-medium'>5 months</span>
                 </div>
                 <div className='w-12 h-12 rounded-full border border-gray-600 bg-white text-black flex items-center justify-center group-hover:scale-125 group-hover:shadow-lg transition-all duration-300'>
-                  <span className='material-icons transform rotate-[-45deg]'>
+                  <span className='material-icons transform -rotate-45'>
                     arrow_forward
                   </span>
                 </div>
@@ -364,11 +396,11 @@ export default function Home() {
             </div>
             <div className='lg:col-span-8 bg-surface-dark relative overflow-hidden flex items-center justify-center p-8'>
               <div className='absolute inset-0 bg-[#0a0f0d]'></div>
-              <div className='absolute bottom-0 left-0 right-0 h-1/2 bg-gradient-to-t from-black to-transparent'></div>
-              <div className='relative z-10 w-full flex items-center justify-center flex-col'>
+              <div className='absolute bottom-0 left-0 right-0 h-1/2 bg-linear-to-t from-black to-transparent'></div>
+              <div className='relative z-10 w-full flex items-center justify-center flex-col project-image-container'>
                 <img
                   alt='Dashboard Mockup'
-                  className='w-3/4 rounded-lg shadow-2xl border border-gray-800 transform group-hover:scale-105 group-hover:translate-y-[-10px] transition-transform duration-500'
+                  className='w-3/4 rounded-lg shadow-2xl border border-gray-800 transform'
                   src='https://lh3.googleusercontent.com/aida-public/AB6AXuDWp9Rdpeglq-S9p5NgLPUhhNHzI7q4NNbCEN26tDh8fDiBiNtQUQBTsji3R0KcNK4B2tvwHoiEQbbVj6ODg7OftLe-1EQxi8R63_19S4y6Mday63ASXCouB0ARJalaGFj0GxxnT2QF-8Jpa5xG1NYaliWhfOF3vN6g6ijqpBuFpGr59YFaupjTZNlT24U92vzy1hlGf_9AZYyaPnHhhFF7UAZujH6gOFdawORjADEnhVBEQAp78dP1ODfdrJKKNS6qcYIltX2YmrGh'
                 />
                 <p className='mt-6 text-gray-400 text-sm max-w-md text-center transform group-hover:text-white transition-colors'>
@@ -397,7 +429,7 @@ export default function Home() {
                   <span className='text-sm font-medium'>5 months</span>
                 </div>
                 <div className='w-12 h-12 rounded-full border border-gray-600 flex items-center justify-center group-hover:bg-white group-hover:text-black group-hover:shadow-[0_0_15px_rgba(255,255,255,0.5)] transition-all duration-300 transform group-hover:scale-110'>
-                  <span className='material-icons transform rotate-[-45deg]'>
+                  <span className='material-icons transform -rotate-45'>
                     arrow_forward
                   </span>
                 </div>
@@ -412,10 +444,10 @@ export default function Home() {
               >
                 <path d='M0 100 C 20 0 50 0 100 100 Z' fill='#333'></path>
               </svg>
-              <div className='relative z-10 flex flex-col items-center'>
+              <div className='relative z-10 flex flex-col items-center project-image-container'>
                 <img
                   alt='Fintech Web Mockup'
-                  className='w-3/4 rounded-lg shadow-2xl transform rotate-2 group-hover:rotate-0 group-hover:scale-105 transition-transform duration-500'
+                  className='w-3/4 rounded-lg shadow-2xl transform'
                   src='https://lh3.googleusercontent.com/aida-public/AB6AXuDiAlpHrOkl164OqIK1OZ8t94TR_wIAiv6t5C93fnGGXISapldBsiBCaxQt67cEN0PuAx3cgbevz3oKptQE43IKBd-WjFoaDMIFMqw2s0FY4Lu3Ce3SbL8qVH_NhCGwoxv35rzu0eL8U8A4RTIjLtIvCYjGymOEo4wTBwWbzUo97_U1gRrXks66mp28IqQYoYTuiTb3Indz-79ms7kVMgmsC_94X8ybDUaj1D5fq2k3ctNrj6gPdhPK96rRCBTVPX9RNk_FNpt_fChG'
                 />
                 <div className='mt-8 bg-gray-900 p-4 rounded border border-gray-700 max-w-sm transform group-hover:translate-y-2 transition-transform duration-300'>
@@ -481,7 +513,7 @@ export default function Home() {
             className='absolute bottom-0 md:bottom-10 left-1/2 transform -translate-x-1/2 translate-y-1/2 md:translate-y-0 reveal-on-scroll'
             style={{ transitionDelay: '400ms' }}
           >
-            <div className='w-32 h-32 rounded-full bg-yellow-900/20 flex items-center justify-center p-2 animate-[spin_10s_linear_infinite] hover:animate-none'>
+            <div className='w-32 h-32 rounded-full bg-yellow-900/20 flex items-center justify-center p-2 animate-spin-slow hover:animate-none'>
               <div className='text-center text-[10px] uppercase font-bold tracking-tight text-primary p-2 border border-primary rounded-full bg-background-light dark:bg-black'>
                 Questions
                 <br />
@@ -652,12 +684,12 @@ export default function Home() {
               </a>
             </div>
             <div className='flex items-center space-x-2 bg-white text-black px-3 py-1 rounded cursor-pointer hover:bg-gray-200 transition-colors'>
-              <span className='material-icons text-sm'>bolt</span>
-              <span className='font-bold text-[10px]'>Made in Framer</span>
+              <span className='material-icons text-sm'>design_services</span>
+              <span className='font-bold text-[10px]'>Duong Minh Le</span>
             </div>
           </div>
         </div>
       </footer>
-    </>
+    </div>
   );
 }
