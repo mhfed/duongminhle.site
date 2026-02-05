@@ -21,7 +21,7 @@ const sacramento = Sacramento({
 });
 
 export const metadata: Metadata = {
-  title: 'Sanjana Baweja - Portfolio',
+  title: 'Duong Minh Le - Portfolio',
   description: 'User Experience Designer, artist and storyteller.',
 };
 

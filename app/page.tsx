@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
+import Image from 'next/image';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -98,10 +99,10 @@ export default function Home() {
     <div ref={containerRef}>
       <nav className='fixed top-0 w-full z-50 bg-background-light/90 dark:bg-background-dark/90 backdrop-blur-md border-b border-border-light dark:border-border-dark px-6 py-4 flex justify-between items-center transition-all duration-300 shadow-sm'>
         <a
-          className='text-primary font-display font-bold tracking-widest text-lg hover:scale-105 transition-transform cursor-pointer'
+          className='text-primary font-display font-bold tracking-widest text-lg hover:scale-105 transition-transform cursor-pointer uppercase'
           href='#about'
         >
-          SANJANA.
+          Duong Minh Le.
         </a>
         <div className='hidden md:flex space-x-8 text-sm font-medium tracking-widest text-gray-500 dark:text-gray-400'>
           <a
@@ -146,15 +147,15 @@ export default function Home() {
         id='about'
       >
         <div className='absolute inset-0 bg-grid-light dark:bg-grid-dark bg-grid opacity-20 pointer-events-none z-0'></div>
-        <div className='container mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-12 relative z-10 flex-grow'>
+        <div className='container mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-12 relative z-10 grow'>
           <div className='flex flex-col justify-center'>
             <div className='relative mb-8 reveal-on-scroll hero-title'>
               <h1 className='text-7xl md:text-9xl font-display font-bold leading-none uppercase tracking-tighter'>
-                Sanjana
+                Duong
                 <br />
-                Baweja
+                Minh Le
               </h1>
-              <div className='hidden md:block absolute top-0 right-10 lg:right-20 w-24 h-24 bg-primary text-white flex items-center justify-center shadow-lg shadow-primary/30 animate-[pulse_3s_ease-in-out_infinite]'>
+              <div className='hidden md:flex absolute top-0 right-10 lg:right-20 w-24 h-24 bg-primary text-white items-center justify-center shadow-lg shadow-primary/30 animate-[pulse_3s_ease-in-out_infinite]'>
                 <svg
                   fill='currentColor'
                   height='60'
@@ -197,17 +198,21 @@ export default function Home() {
             </div>
             <div className='grid grid-cols-2 gap-4 mt-auto mb-12'>
               <div className='aspect-video bg-gray-800 relative overflow-hidden group rounded-sm project-image-container'>
-                <img
+                <Image
                   alt='Design work sketch'
-                  className='w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-all duration-500 grayscale group-hover:grayscale-0 transform'
+                  className='object-cover opacity-60 group-hover:opacity-100 transition-all duration-500 grayscale group-hover:grayscale-0 transform'
                   src='https://lh3.googleusercontent.com/aida-public/AB6AXuD7BfwYkJ3wuAlEYcxseZvzLefQYzqAA4iH0dPyn4BdYhZN24dTL01WOHCrn3FP_L4Xmwg4dfQBHawF8g5CYK2RLRQ6OkfJbEJBr6g2FTQluSJww3W1SwMM-d4CKCRMPXMH2GdxNBW8IXSgKjCK6IPzo-qJIXxIxG3IAHSC81BIbrlwuSTB0kS_7XJBcEg0_mFOyU1ylgQJfWNpqeRXijIl6tD0oFtVehfcAii_J5bIK-vVa18cozT7PJoqnfSj4B4fqIFnQMm3jPLE'
+                  fill
+                  sizes='(max-width: 768px) 100vw, 50vw'
                 />
               </div>
               <div className='aspect-video bg-gray-800 relative overflow-hidden group rounded-sm project-image-container'>
-                <img
+                <Image
                   alt='Team collaboration'
-                  className='w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-all duration-500 grayscale group-hover:grayscale-0 transform'
+                  className='object-cover opacity-60 group-hover:opacity-100 transition-all duration-500 grayscale group-hover:grayscale-0 transform'
                   src='https://lh3.googleusercontent.com/aida-public/AB6AXuAqSao1pwF2Yzq9R9GxW1uatJTUCwn39iZw8PG1Dil7nrBas30T26LKQkJumeOjbJbMEUHlaW4ywsI7c8DBwCm1LOmrccghm1K5brY2bGI_2QO3G_CNCzzfFSaoIOj_UdbOnItuXMN_ybRnWs1upEZHrfxiG1W4C16C9EZtqxJKJmHnEFJ4qlpkD6O9xdIqF7A_aPKFq49RuNRFzoaLJVBb50nCDrd5nZHOgutlGQWmQkjppWjsZeS-P_Ay8b5VfFHE07Fy6uR8H5Sa'
+                  fill
+                  sizes='(max-width: 768px) 100vw, 50vw'
                 />
               </div>
               <div className='aspect-video bg-gray-900 relative overflow-hidden group cursor-pointer rounded-sm project-image-container'>
@@ -219,17 +224,21 @@ export default function Home() {
                     Click to Reveal
                   </span>
                 </div>
-                <img
+                <Image
                   alt='Presentation'
-                  className='w-full h-full object-cover opacity-40 group-hover:opacity-100 transition-all duration-500 grayscale group-hover:grayscale-0 transform'
+                  className='object-cover opacity-40 group-hover:opacity-100 transition-all duration-500 grayscale group-hover:grayscale-0 transform'
                   src='https://lh3.googleusercontent.com/aida-public/AB6AXuDByAZlq0YuAu_NWfEPItpBexhie27_nPbzic9qIc7xEaSVWMqLneVUM0pYQx5pR-1jcHGDZuf8O6fkmdCesDMEIyb6gTdGuYbSUtY9FssIeauSLMxILqXs8AIbCUCEgYUW7HHxjH_lOpnd3bMHa3VJt8YeSyhJ-YoUWQrI_SJSbOKSenY_d698g4pbGwPfYmQqjI7XNJ1AD_LN7KrtuKrcC9T0Q3Eox7UyhdAaG61B8ayuKbYpSFf-qqe-FT1MR8eu4EzLffOfP9iL'
+                  fill
+                  sizes='(max-width: 768px) 100vw, 50vw'
                 />
               </div>
               <div className='aspect-video bg-gray-800 relative overflow-hidden group rounded-sm project-image-container'>
-                <img
+                <Image
                   alt='Wireframing'
-                  className='w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-all duration-500 grayscale group-hover:grayscale-0 transform'
+                  className='object-cover opacity-60 group-hover:opacity-100 transition-all duration-500 grayscale group-hover:grayscale-0 transform'
                   src='https://lh3.googleusercontent.com/aida-public/AB6AXuDrKyl_SXfYwE425QFtax06f_VoRuRZaTMDM0nTEpdClw8w7IVGDm2W1siTNELDh9ApMyDteTEz5w0q5VPtFwnPjvsWX-G0DPmbt3CV-Pi2tEHf8bbC67a8CLzFf4jEHAIyf7Ts66rbH4Cdj7AsGmSnDZuaDGX4DdRbG_KwuFmk614xSB3R9TFSO-kOQ5Hug2ChgMwtbPF0PFoQiRfczbOby3y3ZsqVxXQcuenMKfMgHORYLCah4pIuV50li6kQjJ2B81eZulyrU0i2'
+                  fill
+                  sizes='(max-width: 768px) 100vw, 50vw'
                 />
               </div>
             </div>
@@ -299,10 +308,13 @@ export default function Home() {
               <div className='absolute inset-0 bg-linear-to-br from-black via-gray-900 to-black opacity-90 transition-opacity group-hover:opacity-100'></div>
               <div className='absolute top-10 right-10 w-64 h-64 bg-gray-800 rounded-full mix-blend-overlay filter blur-3xl opacity-30 group-hover:opacity-50 transition-opacity duration-700'></div>
               <div className='relative z-10 w-full max-w-4xl flex items-center justify-center space-x-8 project-image-container'>
-                <img
+                <Image
                   alt='Mobile App Mockup'
-                  className='h-[400px] w-auto object-contain rounded-3xl shadow-2xl transform'
+                  className='object-contain rounded-3xl shadow-2xl transform'
                   src='https://lh3.googleusercontent.com/aida-public/AB6AXuAlmBnqxDIGkyaRz5CIIlAXGjnekmVgmaLmLXInLYWMiAYL3uldmjk9TOAxh9DnFF9eQvJhCOYF8R3BYFp8i_O4MJ7WbmvpF9_jxGmkM8FqeP3bIZvQG52A5Ldu33nNFHgqN_batKo0mJ8bgoqIfwAC5bWD8GOv_BPPan7bExe0_tSn_HR08SSeiTPJpRzHniHFHtmkgu0qnQMccxTvlTcNrreZAPxSPRtPoflY3eEGc-YUdqJoJQhoRESjZ4PTkTocz0x3uYW2CoNc'
+                  width={400}
+                  height={400}
+                  style={{ width: 'auto', height: '400px' }}
                 />
                 <div className='hidden md:block text-gray-300 max-w-xs transform translate-y-4 opacity-80 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 delay-100'>
                   <h4 className='text-xl font-bold mb-2 text-white'>
@@ -352,10 +364,13 @@ export default function Home() {
             <div className='lg:col-span-8 bg-surface-dark relative overflow-hidden flex items-center justify-center p-8'>
               <div className='absolute inset-0 bg-linear-to-bl from-gray-900 via-black to-gray-900 opacity-90'></div>
               <div className='relative z-10 w-full max-w-4xl flex items-center justify-center space-x-8 project-image-container'>
-                <img
+                <Image
                   alt='Sahayak App Mockup'
-                  className='h-[400px] w-auto object-contain rounded-3xl shadow-2xl transform'
+                  className='object-contain rounded-3xl shadow-2xl transform'
                   src='https://lh3.googleusercontent.com/aida-public/AB6AXuBIGqsINpCsqNyBlBEKSgsJR_HvTgVqrUg0iWD2pkEw2lnG5b9chFl1P9OfiK7gkU_14U8_gvj0YBZnP65qz5pT1AJw5iZXTBUEmojQlTZhPatF4M5vXJJeUf2jcNfUT7mjzXlrPSiSdGdnn2hDSxOhhcRRFtycjuSkUkVGCLLP61adr8nlfkCX-KsnYyuDrItHXEa3Cl-PzDJpprooJnDDpxOEt4lpV69wALdbaCbTv7b2oOR7Qblzqax0fCDDx3KDPS5f-pYNgGfl'
+                  width={400}
+                  height={400}
+                  style={{ width: 'auto', height: '400px' }}
                 />
                 <div className='hidden md:block bg-white text-black p-6 rounded-lg shadow-lg max-w-xs transform translate-y-12 group-hover:translate-y-8 transition-transform duration-500'>
                   <h4 className='font-bold mb-2'>
@@ -398,10 +413,13 @@ export default function Home() {
               <div className='absolute inset-0 bg-[#0a0f0d]'></div>
               <div className='absolute bottom-0 left-0 right-0 h-1/2 bg-linear-to-t from-black to-transparent'></div>
               <div className='relative z-10 w-full flex items-center justify-center flex-col project-image-container'>
-                <img
+                <Image
                   alt='Dashboard Mockup'
-                  className='w-3/4 rounded-lg shadow-2xl border border-gray-800 transform'
+                  className='rounded-lg shadow-2xl border border-gray-800 transform'
                   src='https://lh3.googleusercontent.com/aida-public/AB6AXuDWp9Rdpeglq-S9p5NgLPUhhNHzI7q4NNbCEN26tDh8fDiBiNtQUQBTsji3R0KcNK4B2tvwHoiEQbbVj6ODg7OftLe-1EQxi8R63_19S4y6Mday63ASXCouB0ARJalaGFj0GxxnT2QF-8Jpa5xG1NYaliWhfOF3vN6g6ijqpBuFpGr59YFaupjTZNlT24U92vzy1hlGf_9AZYyaPnHhhFF7UAZujH6gOFdawORjADEnhVBEQAp78dP1ODfdrJKKNS6qcYIltX2YmrGh'
+                  width={800}
+                  height={600}
+                  style={{ width: '75%', height: 'auto' }}
                 />
                 <p className='mt-6 text-gray-400 text-sm max-w-md text-center transform group-hover:text-white transition-colors'>
                   Worked as a UI/UX Designer at STEMpedia (EdTech Company)
@@ -445,10 +463,13 @@ export default function Home() {
                 <path d='M0 100 C 20 0 50 0 100 100 Z' fill='#333'></path>
               </svg>
               <div className='relative z-10 flex flex-col items-center project-image-container'>
-                <img
+                <Image
                   alt='Fintech Web Mockup'
-                  className='w-3/4 rounded-lg shadow-2xl transform'
+                  className='rounded-lg shadow-2xl transform'
                   src='https://lh3.googleusercontent.com/aida-public/AB6AXuDiAlpHrOkl164OqIK1OZ8t94TR_wIAiv6t5C93fnGGXISapldBsiBCaxQt67cEN0PuAx3cgbevz3oKptQE43IKBd-WjFoaDMIFMqw2s0FY4Lu3Ce3SbL8qVH_NhCGwoxv35rzu0eL8U8A4RTIjLtIvCYjGymOEo4wTBwWbzUo97_U1gRrXks66mp28IqQYoYTuiTb3Indz-79ms7kVMgmsC_94X8ybDUaj1D5fq2k3ctNrj6gPdhPK96rRCBTVPX9RNk_FNpt_fChG'
+                  width={800}
+                  height={600}
+                  style={{ width: '75%', height: 'auto' }}
                 />
                 <div className='mt-8 bg-gray-900 p-4 rounded border border-gray-700 max-w-sm transform group-hover:translate-y-2 transition-transform duration-300'>
                   <p className='text-sm text-gray-300'>
@@ -527,20 +548,26 @@ export default function Home() {
             className='absolute top-20 right-4 md:right-20 flex -space-x-4 reveal-on-scroll'
             style={{ transitionDelay: '500ms' }}
           >
-            <img
+            <Image
               alt='Person'
-              className='w-16 h-16 rounded-full border-2 border-background-dark object-cover hover:z-10 hover:scale-125 transition-transform'
+              className='rounded-full border-2 border-background-dark object-cover hover:z-10 hover:scale-125 transition-transform'
               src='https://lh3.googleusercontent.com/aida-public/AB6AXuC9HcI-HWTdiW5kEdBKlxdEHOXSKn1FgQV4jYBdr6GV3HebKtMO9pUpe6Xh1M0t2ZE31Zf0CGl6qbHxjMKuCJdHnsiWXWwGaZuDDkIJ7Dh-SBtoi8wu4kuDcQE39tZg-naITo4OfuF9s_minrz0nIKm-9NAAQBeifwKAgwwMncxYJ1ZkWDmaFnchjJeR9v7Py1HyhSQ69z8vxY_Y2uN-iANYkuVhQquHNJLZdpX3CVJmHP4eT2hyT71aFJ5W-vf6jOQaBSaYr3qpg1h'
+              width={64}
+              height={64}
             />
-            <img
+            <Image
               alt='Person'
-              className='w-16 h-16 rounded-full border-2 border-background-dark object-cover grayscale hover:grayscale-0 hover:z-10 hover:scale-125 transition-all'
+              className='rounded-full border-2 border-background-dark object-cover grayscale hover:grayscale-0 hover:z-10 hover:scale-125 transition-all'
               src='https://lh3.googleusercontent.com/aida-public/AB6AXuCNhOmSPlVO7Jur0utAveRqaRY1DuIxj-GXVIcn4jhf_Hgd6XBkIe_o1VyfZJa2w4Efv5YKqC9GbZAFr9kiVz9n2Jf1cN-zTDJJCIYAbrf6afsOSDNHhtxmvgAINQ8RHGCoyjkglEbHdVpo--cLoTN29TgJjMAx3pvvCvmeMo_QK9ZTFnrL5tfd887wDFEmiLvX265maqbkSVRyanIB1PJ-l_yYihOxVLEDmU85YiAaobH6Yj5EbWT04vT_vx6OquZ5AUEFDDRrYbQ1'
+              width={64}
+              height={64}
             />
-            <img
+            <Image
               alt='Person'
-              className='w-16 h-16 rounded-full border-2 border-background-dark object-cover hover:z-10 hover:scale-125 transition-transform'
+              className='rounded-full border-2 border-background-dark object-cover hover:z-10 hover:scale-125 transition-transform'
               src='https://lh3.googleusercontent.com/aida-public/AB6AXuC6tsEQAITpX4LVtjN8_fxxhqqypIBoX0Ipw28iL-07rfxSfhXEPzURfhN9GQA7eEZeqV1aIh4DBpXnXa3oFXdzNJEPII6OjrvmEeIGcn9DXtBZT6NOIz5Z8xhhkmiP2gj7Z164bjATQDaRBLH-SgEbJtT0KHOyI7Ge5W4Ph7gDz8skrlxgr_peVyBLulFTN_51ruhE-RTHHuURXpCAs7Jcz-H8ZSmdXjBtDg3RZLCD29toOkE803RjUejmutAPgIhnkF-DL-bhm-7I'
+              width={64}
+              height={64}
             />
             <div className='absolute top-16 right-0 bg-background-light dark:bg-black p-2 border border-gray-700 text-xs w-32 shadow-lg rotate-3 hover:rotate-0 transition-transform'>
               dropping movie quotes &apos;wherever whenever&apos;
@@ -578,17 +605,19 @@ export default function Home() {
           </div>
           <div className='max-w-4xl'>
             <p className='text-xl md:text-3xl font-light leading-relaxed mb-12 text-gray-700 dark:text-gray-200'>
-              Sanjana has a been an exemplary person in shaping our UX Design
-              curriculum at Tutedude, which embarks her skills and deep
-              knowledge in the UX domain. Her decisive approach and ability to
+              Duong has a been an exemplary person in shaping our UX Design
+              curriculum at Tutedude, which embarks his skills and deep
+              knowledge in the UX domain. His decisive approach and ability to
               commit towards task completion was commendable.
             </p>
             <div className='flex items-center justify-between border-t border-border-light dark:border-border-dark pt-8'>
               <div className='flex items-center space-x-4'>
-                <img
+                <Image
                   alt='Mohit Naroune'
-                  className='w-14 h-14 rounded-full object-cover grayscale hover:grayscale-0 transition-all duration-300'
+                  className='rounded-full object-cover grayscale hover:grayscale-0 transition-all duration-300'
                   src='https://lh3.googleusercontent.com/aida-public/AB6AXuDS0ij420hVgxTaaWXDpOTwcGE7IOf9LYqhXYmaSs7X66NVd5I-0DqNrP4OT1u8hbm7VquChSPZ74PhHbQkMkVAWHld26rPQWQ8S3O50x67B-dy7tZPwMdsA1i2GxuTEsibebw2BoWaxo1rsxP30U8QJfUeae-rJAGjD6D4X6DOzD9uwX2h87EkzeZ__xXgImtxbJZv5jgF0BjpRt7PEKALm8t0kZ2WT7UxdUM2ZXHjvpiuuppUokq-Wjh6yOj2x6jBLt-7hyVJeTwa'
+                  width={56}
+                  height={56}
                 />
                 <div>
                   <h4 className='font-bold text-lg text-gray-900 dark:text-white'>
@@ -620,9 +649,9 @@ export default function Home() {
               </h5>
               <a
                 className='block text-xl md:text-2xl hover:text-primary transition-colors mb-2'
-                href='mailto:sanjanabaweja1@gmail.com'
+                href='mailto:duongminhle@gmail.com'
               >
-                sanjanabaweja1@gmail.com
+                duongminhle@gmail.com
               </a>
               <p className='text-xl text-gray-400 font-light'>
                 <span className='text-primary font-bold'>+</span>91 9890690762
@@ -668,7 +697,7 @@ export default function Home() {
             </div>
           </div>
           <div className='flex flex-col md:flex-row justify-between items-center text-xs text-gray-500 border-t border-gray-900 pt-8 uppercase tracking-widest'>
-            <p>© 2025 Sanjana. All right reserved</p>
+            <p>© 2025 Duong Minh Le. All right reserved</p>
             <div className='flex space-x-6 my-4 md:my-0'>
               <a className='hover:text-white transition-colors' href='#about'>
                 About

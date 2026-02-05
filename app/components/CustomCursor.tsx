@@ -46,7 +46,7 @@ export default function CustomCursor() {
   return (
     <>
       <motion.div
-        className='fixed top-0 left-0 w-8 h-8 rounded-full border border-primary pointer-events-none z-[9999] hidden md:block mix-blend-difference'
+        className='fixed top-0 left-0 w-8 h-8 rounded-full border border-primary pointer-events-none z-50 hidden md:block mix-blend-difference'
         style={{
           x: cursorXSpring,
           y: cursorYSpring,
@@ -55,18 +55,11 @@ export default function CustomCursor() {
         }}
       />
       <motion.div
-        className='fixed top-0 left-0 w-2 h-2 rounded-full bg-primary pointer-events-none z-[9999] hidden md:block'
+        className='fixed top-0 left-0 w-2 h-2 rounded-full bg-primary pointer-events-none z-50 hidden md:block'
         style={{
           x: cursorX,
           y: cursorY,
-          translateX: 12, // Center dot inside the larger circle (32px / 2 - 8px / 2 + offset?)
-          // Actually, 32px circle, center is 16. Dot is 8px.
-          // cursorX set to e.clientX - 16. center of circle is at mouse.
-          // Dot wants to be at mouse. e.clientX.
-          // So dot X should be e.clientX - 4 (half width).
-          // Let's rely on transform helper or just offset useSpring vs direct value.
-          // Simplified: The dot follows exactly, the ring follows with spring.
-          // X/Y vars are set to -16 offset. So dot needs +12 to be centered (16 - 4 = 12).
+          translateX: 12,
           translateY: 12,
         }}
       />
