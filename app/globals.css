@@ -21,6 +21,10 @@
     background-size: 30px 30px;
   }
 
+  .bg-grid-sparse {
+    background-size: 60px 60px;
+  }
+
   .bg-grid-dark {
     background-image:
       linear-gradient(to right, #262626 1px, transparent 1px),

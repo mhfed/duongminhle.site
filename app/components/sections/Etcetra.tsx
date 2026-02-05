@@ -6,7 +6,7 @@ export default function Etcetra() {
       className='relative py-32 overflow-hidden bg-background-light dark:bg-background-dark scroll-mt-20'
       id='etcetra'
     >
-      <div className='absolute inset-0 bg-grid-light dark:bg-grid-dark bg-grid opacity-20 pointer-events-none'></div>
+      <div className='absolute inset-0 bg-grid-light dark:bg-grid-dark bg-grid-sparse opacity-10 dark:opacity-05 pointer-events-none'></div>
       <div className='container mx-auto px-6 relative z-10 min-h-[600px] flex items-center justify-center reveal-on-scroll'>
         <h2 className='text-5xl md:text-7xl font-display font-bold text-center leading-tight bg-background-light/50 dark:bg-background-dark/50 p-4 relative z-20 backdrop-blur-sm rounded-xl'>
           Not always working

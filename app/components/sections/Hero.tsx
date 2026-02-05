@@ -38,7 +38,7 @@ export default function Hero() {
           {/* 2. Top Right: Statement */}
           {/* 2. Top Right: Statement */}
           <div className='border-b border-border-light dark:border-gray-800 p-8 md:p-12 flex flex-col justify-end relative'>
-            <div className='absolute inset-0 bg-grid-light dark:bg-grid-dark bg-grid opacity-[0.05] dark:opacity-[0.1] pointer-events-none z-0'></div>
+            <div className='absolute inset-0 bg-grid-light dark:bg-grid-dark bg-grid opacity-[0.05] dark:opacity-[0.05] pointer-events-none z-0'></div>
             <div className='absolute bottom-0 left-0 w-4 h-4 border-b border-l border-white/20 hidden lg:block z-10'></div>
             <div className='reveal-on-scroll relative z-10'>
               <h2 className='text-4xl md:text-5xl font-display font-bold leading-tight'>
@@ -55,7 +55,7 @@ export default function Hero() {
           {/* 3. Bottom Left: Bio */}
           {/* 3. Bottom Left: Bio */}
           <div className='lg:border-r border-border-light dark:border-gray-800 p-8 md:p-12 flex flex-col justify-between relative'>
-            <div className='absolute inset-0 bg-grid-light dark:bg-grid-dark bg-grid opacity-[0.05] dark:opacity-[0.1] pointer-events-none z-0'></div>
+            <div className='absolute inset-0 bg-grid-light dark:bg-grid-dark bg-grid opacity-[0.05] dark:opacity-[0.05] pointer-events-none z-0'></div>
             <div className='max-w-md text-gray-600 dark:text-gray-400 text-lg leading-relaxed reveal-on-scroll relative z-10'>
               I&apos;m a User Experience Designer, artist and storyteller. I
               believe in solving meaningful problems through elegant, creative
@@ -78,7 +78,7 @@ export default function Hero() {
 
           {/* 4. Bottom Right: Image Grid */}
           <div className='p-0 relative overflow-hidden group h-full'>
-            <div className='grid grid-cols-2 h-full'>
+            <div className='grid grid-cols-2 h-full p-4'>
               <div className='relative border-r border-b border-gray-800/50 grayscale hover:grayscale-0 transition-all duration-500'>
                 <Image
                   src='https://lh3.googleusercontent.com/aida-public/AB6AXuD7BfwYkJ3wuAlEYcxseZvzLefQYzqAA4iH0dPyn4BdYhZN24dTL01WOHCrn3FP_L4Xmwg4dfQBHawF8g5CYK2RLRQ6OkfJbEJBr6g2FTQluSJww3W1SwMM-d4CKCRMPXMH2GdxNBW8IXSgKjCK6IPzo-qJIXxIxG3IAHSC81BIbrlwuSTB0kS_7XJBcEg0_mFOyU1ylgQJfWNpqeRXijIl6tD0oFtVehfcAii_J5bIK-vVa18cozT7PJoqnfSj4B4fqIFnQMm3jPLE'
@@ -109,9 +109,6 @@ export default function Hero() {
                 />
               </div>
               <div className='relative grayscale hover:grayscale-0 transition-all duration-500'>
-                <div className='absolute bottom-2 right-2 z-20 bg-black/80 text-white text-[10px] px-2 py-1 uppercase tracking-widest'>
-                  Made in Framer
-                </div>
                 <Image
                   src='https://lh3.googleusercontent.com/aida-public/AB6AXuDrKyl_SXfYwE425QFtax06f_VoRuRZaTMDM0nTEpdClw8w7IVGDm2W1siTNELDh9ApMyDteTEz5w0q5VPtFwnPjvsWX-G0DPmbt3CV-Pi2tEHf8bbC67a8CLzFf4jEHAIyf7Ts66rbH4Cdj7AsGmSnDZuaDGX4DdRbG_KwuFmk614xSB3R9TFSO-kOQ5Hug2ChgMwtbPF0PFoQiRfczbOby3y3ZsqVxXQcuenMKfMgHORYLCah4pIuV50li6kQjJ2B81eZulyrU0i2'
                   alt='Grid Image 4'
