@@ -18,7 +18,7 @@
 
 @layer utilities {
   .bg-grid {
-    background-size: 60px 60px;
+    background-size: 30px 30px;
   }
 
   .bg-grid-dark {
