@@ -2,7 +2,12 @@ import { db } from './db';
 import { settings } from './schema';
 import { eq } from 'drizzle-orm';
 
-export type SettingsKey = 'global' | 'hero' | 'about_transition' | 'etcetra';
+export type SettingsKey =
+  | 'global'
+  | 'hero'
+  | 'about_transition'
+  | 'etcetra'
+  | 'about';
 
 export const defaultSettings: Record<SettingsKey, any> = {
   global: {
@@ -66,6 +71,42 @@ export const defaultSettings: Record<SettingsKey, any> = {
         img2: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCNhOmSPlVO7Jur0utAveRqaRY1DuIxj-GXVIcn4jhf_Hgd6XBkIe_o1VyfZJa2w4Efv5YKqC9GbZAFr9kiVz9n2Jf1cN-zTDJJCIYAbrf6afsOSDNHhtxmvgAINQ8RHGCoyjkglEbHdVpo--cLoTN29TgJjMAx3pvvCvmeMo_QK9ZTFnrL5tfd887wDFEmiLvX265maqbkSVRyanIB1PJ-l_yYihOxVLEDmU85YiAaobH6Yj5EbWT04vT_vx6OquZ5AUEFDDRrYbQ1',
         img3: 'https://lh3.googleusercontent.com/aida-public/AB6AXuC6tsEQAITpX4LVtjN8_fxxhqqypIBoX0Ipw28iL-07rfxSfhXEPzURfhN9GQA7eEZeqV1aIh4DBpXnXa3oFXdzNJEPII6OjrvmEeIGcn9DXtBZT6NOIz5Z8xhhkmiP2gj7Z164bjATQDaRBLH-SgEbJtT0KHOyI7Ge5W4Ph7gDz8skrlxgr_peVyBLulFTN_51ruhE-RTHHuURXpCAs7Jcz-H8ZSmdXjBtDg3RZLCD29toOkE803RjUejmutAPgIhnkF-DL-bhm-7I',
       },
+    },
+  },
+  about: {
+    intro: {
+      name: 'SANJANA BAWEJA',
+      subtitle: '/noun/ gentle, peaceful',
+      bio: 'An interaction designer who finds creativity in the details and meaning in the experience. Always exploring, always questioning.',
+      image: '',
+    },
+    experience: [
+      {
+        id: 'background',
+        title: 'Background',
+        content:
+          'Sketched my way through childhood, wireframing my way through adulthood. I studied science in school—who knew reactions and formulas would lead me to design? Currently in my 3rd Year of B.Des in Interaction Design at UID, Gujarat.',
+      },
+      {
+        id: 'philosophy',
+        title: 'Design Philosophy',
+        content:
+          'Designing is just structured overthinking—done effortlessly. To me, design is aligning business strategies with user expectations in a way that feels seamless and intuitive.',
+      },
+      {
+        id: 'things-i-love',
+        title: 'Things I love',
+        content:
+          'From negotiating screen time as a kid to calling every film ‘creative fuel’—I’ve always found reasons to watch. I love listening to people talk about things they love. Water color paintings are my favorite form of therapy.',
+      },
+    ],
+    gallery: ['', '', '', ''],
+    quote: {
+      line1: 'Good design is ',
+      line1_strike: 'invisible',
+      line2: 'but great design makes you look ',
+      line2_highlight: 'twice',
+      signature: 'Sanjana',
     },
   },
 };

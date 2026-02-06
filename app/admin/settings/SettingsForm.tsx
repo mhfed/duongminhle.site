@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { saveSettings } from '@/app/actions/settings';
 import { SettingsKey, defaultSettings } from '@/app/lib/settings';
+import ImageUpload from '@/app/components/admin/ImageUpload';
 
 export default function SettingsForm({
   initialSettings,
@@ -83,7 +84,13 @@ export default function SettingsForm({
       {/* Tabs */}
       <div className='flex border-b border-gray-200 dark:border-gray-800'>
         {(
-          ['global', 'hero', 'about_transition', 'etcetra'] as SettingsKey[]
+          [
+            'global',
+            'hero',
+            'about_transition',
+            'etcetra',
+            'about',
+          ] as SettingsKey[]
         ).map((tab) => (
           <button
             key={tab}
@@ -177,6 +184,126 @@ export default function SettingsForm({
             {renderInput('Image 1', 'floatingItems.images.img1')}
             {renderInput('Image 2', 'floatingItems.images.img2')}
             {renderInput('Image 3', 'floatingItems.images.img3')}
+          </div>
+        )}
+
+        {activeTab === 'about' && (
+          <div className='space-y-8'>
+            <div className='bg-zinc-50 dark:bg-zinc-900 p-6 rounded-lg'>
+              <h3 className='text-lg font-bold mb-4 border-b pb-2 dark:border-zinc-700'>
+                Intro Section
+              </h3>
+              <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
+                {renderInput('Name', 'intro.name')}
+                {renderInput('Subtitle', 'intro.subtitle')}
+              </div>
+              {renderInput('Bio', 'intro.bio', 'text', 3)}
+
+              <div className='mt-4'>
+                <label className='block text-sm font-medium mb-1'>
+                  Profile Image
+                </label>
+                <ImageUpload
+                  value={settings.about?.intro?.image || ''}
+                  onChange={(url) => handleChange('about', 'intro.image', url)}
+                />
+              </div>
+            </div>
+
+            <div className='bg-zinc-50 dark:bg-zinc-900 p-6 rounded-lg'>
+              <h3 className='text-lg font-bold mb-4 border-b pb-2 dark:border-zinc-700'>
+                Experience (Accordion)
+              </h3>
+              <div className='space-y-6'>
+                {(settings.about?.experience || []).map(
+                  (item: any, index: number) => (
+                    <div
+                      key={index}
+                      className='p-4 border rounded bg-white dark:bg-black dark:border-zinc-800'
+                    >
+                      <div className='flex justify-between items-center mb-2'>
+                        <h4 className='font-medium text-primary'>
+                          Item {index + 1}
+                        </h4>
+                      </div>
+                      <div className='space-y-3'>
+                        <div className='mb-4'>
+                          <label className='block text-sm font-medium mb-1'>
+                            Title
+                          </label>
+                          <input
+                            type='text'
+                            className='w-full p-2 border rounded dark:bg-zinc-800 dark:border-gray-700'
+                            value={item.title}
+                            onChange={(e) =>
+                              handleChange(
+                                'about',
+                                `experience.${index}.title`,
+                                e.target.value,
+                              )
+                            }
+                          />
+                        </div>
+                        <div className='mb-4'>
+                          <label className='block text-sm font-medium mb-1'>
+                            Content
+                          </label>
+                          <textarea
+                            className='w-full p-2 border rounded dark:bg-zinc-800 dark:border-gray-700'
+                            rows={3}
+                            value={item.content}
+                            onChange={(e) =>
+                              handleChange(
+                                'about',
+                                `experience.${index}.content`,
+                                e.target.value,
+                              )
+                            }
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  ),
+                )}
+              </div>
+            </div>
+
+            <div className='bg-zinc-50 dark:bg-zinc-900 p-6 rounded-lg'>
+              <h3 className='text-lg font-bold mb-4 border-b pb-2 dark:border-zinc-700'>
+                At a Glance (Gallery)
+              </h3>
+              <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
+                {(settings.about?.gallery?.length
+                  ? settings.about.gallery
+                  : ['', '', '', '']
+                ).map((url: string, index: number) => (
+                  <div key={index}>
+                    <label className='block text-sm font-medium mb-1'>
+                      Image {index + 1}
+                    </label>
+                    <ImageUpload
+                      value={url}
+                      onChange={(newUrl) =>
+                        handleChange('about', `gallery.${index}`, newUrl)
+                      }
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className='bg-zinc-50 dark:bg-zinc-900 p-6 rounded-lg'>
+              <h3 className='text-lg font-bold mb-4 border-b pb-2 dark:border-zinc-700'>
+                Quote Section
+              </h3>
+              <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
+                {renderInput('Line 1', 'quote.line1')}
+                {renderInput('Line 1 Strike', 'quote.line1_strike')}
+                {renderInput('Line 2', 'quote.line2')}
+                {renderInput('Line 2 Highlight', 'quote.line2_highlight')}
+                {renderInput('Signature', 'quote.signature')}
+              </div>
+            </div>
           </div>
         )}
 

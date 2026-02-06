@@ -7,6 +7,7 @@ export default async function SettingsPage() {
     getSettings('hero'),
     getSettings('about_transition'),
     getSettings('etcetra'),
+    getSettings('about'),
   ]);
 
   const initialSettings = {
@@ -14,6 +15,7 @@ export default async function SettingsPage() {
     hero,
     about_transition: about,
     etcetra,
+    about,
   };
 
   return (
