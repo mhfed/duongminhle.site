@@ -1,11 +1,31 @@
-import { createProject } from '@/app/lib/actions';
+import { db } from '@/app/lib/db';
+import { projects } from '@/app/lib/schema';
+import { eq } from 'drizzle-orm';
+import { updateProject } from '@/app/lib/actions';
+import { notFound } from 'next/navigation';
 import Link from 'next/link';
 
-export default function NewProjectPage() {
+export default async function EditProjectPage({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
+  const { id } = await params;
+  const project = await db
+    .select()
+    .from(projects)
+    .where(eq(projects.id, parseInt(id)))
+    .limit(1)
+    .then((rows) => rows[0]);
+
+  if (!project) {
+    notFound();
+  }
+
   return (
     <div className='max-w-2xl mx-auto'>
       <div className='flex items-center justify-between mb-8'>
-        <h1 className='text-3xl font-bold font-display'>New Project</h1>
+        <h1 className='text-3xl font-bold font-display'>Edit Project</h1>
         <Link
           href='/admin/projects'
           className='text-gray-500 hover:text-black dark:hover:text-white'
@@ -15,7 +35,7 @@ export default function NewProjectPage() {
       </div>
 
       <form
-        action={createProject}
+        action={updateProject.bind(null, project.id)}
         className='space-y-6 bg-white dark:bg-zinc-900 p-8 rounded-xl border border-gray-200 dark:border-gray-800'
       >
         <div>
@@ -24,9 +44,9 @@ export default function NewProjectPage() {
           </label>
           <input
             name='title'
+            defaultValue={project.title}
             required
             className='w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-700 bg-transparent focus:ring-2 focus:ring-primary focus:outline-none'
-            placeholder='Project Title'
           />
         </div>
 
@@ -37,9 +57,9 @@ export default function NewProjectPage() {
             </label>
             <input
               name='role'
+              defaultValue={project.role}
               required
               className='w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-700 bg-transparent focus:ring-2 focus:ring-primary focus:outline-none'
-              placeholder='e.g. UX Design'
             />
           </div>
           <div>
@@ -48,6 +68,7 @@ export default function NewProjectPage() {
             </label>
             <select
               name='roleColor'
+              defaultValue={project.roleColor}
               className='w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-700 bg-transparent focus:ring-2 focus:ring-primary focus:outline-none'
             >
               <option value='text-gray-500'>Gray (Default)</option>
@@ -62,9 +83,9 @@ export default function NewProjectPage() {
           </label>
           <input
             name='duration'
+            defaultValue={project.duration}
             required
             className='w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-700 bg-transparent focus:ring-2 focus:ring-primary focus:outline-none'
-            placeholder='e.g. 3 months'
           />
         </div>
 
@@ -74,9 +95,9 @@ export default function NewProjectPage() {
           </label>
           <input
             name='image'
+            defaultValue={project.image}
             required
             className='w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-700 bg-transparent focus:ring-2 focus:ring-primary focus:outline-none'
-            placeholder='https://...'
           />
         </div>
 
@@ -86,9 +107,9 @@ export default function NewProjectPage() {
           </label>
           <input
             name='alt'
+            defaultValue={project.alt}
             required
             className='w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-700 bg-transparent focus:ring-2 focus:ring-primary focus:outline-none'
-            placeholder='Description of image'
           />
         </div>
 
@@ -99,7 +120,7 @@ export default function NewProjectPage() {
           <input
             name='order'
             type='number'
-            defaultValue='0'
+            defaultValue={project.order}
             className='w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-700 bg-transparent focus:ring-2 focus:ring-primary focus:outline-none'
           />
         </div>
@@ -108,7 +129,7 @@ export default function NewProjectPage() {
           type='submit'
           className='w-full bg-primary text-white font-bold py-3 rounded-lg hover:brightness-110 transition-all'
         >
-          Create Project
+          Update Project
         </button>
       </form>
     </div>

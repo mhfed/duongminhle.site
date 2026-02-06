@@ -3,6 +3,7 @@ import { projects } from '@/app/lib/schema';
 import { desc } from 'drizzle-orm';
 import { deleteProject } from '@/app/lib/actions';
 import Image from 'next/image';
+import Link from 'next/link';
 
 export default async function AdminProjectsPage() {
   const allProjects = await db
@@ -14,12 +15,12 @@ export default async function AdminProjectsPage() {
     <div>
       <div className='flex items-center justify-between mb-8'>
         <h1 className='text-3xl font-bold font-display'>Projects</h1>
-        <a
+        <Link
           href='/admin/projects/new'
           className='bg-primary text-white px-4 py-2 rounded-lg hover:brightness-110 transition-all'
         >
           + New Project
-        </a>
+        </Link>
       </div>
 
       <div className='bg-white dark:bg-zinc-900 rounded-xl border border-gray-200 dark:border-gray-800 overflow-hidden'>
@@ -63,11 +64,19 @@ export default async function AdminProjectsPage() {
                 <td className='p-4 text-gray-500'>{project.role}</td>
                 <td className='p-4 text-gray-500'>{project.order}</td>
                 <td className='p-4 text-right'>
-                  <form action={deleteProject.bind(null, project.id)}>
-                    <button className='text-red-500 hover:text-red-600 text-sm font-medium'>
-                      Delete
-                    </button>
-                  </form>
+                  <div className='flex items-center justify-end space-x-4'>
+                    <Link
+                      href={`/admin/projects/${project.id}`}
+                      className='text-primary hover:text-primary/80 text-sm font-medium'
+                    >
+                      Edit
+                    </Link>
+                    <form action={deleteProject.bind(null, project.id)}>
+                      <button className='text-red-500 hover:text-red-600 text-sm font-medium'>
+                        Delete
+                      </button>
+                    </form>
+                  </div>
                 </td>
               </tr>
             ))}

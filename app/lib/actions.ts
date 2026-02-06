@@ -2,7 +2,7 @@
 
 import { db } from '@/app/lib/db';
 import { projects, testimonials } from '@/app/lib/schema';
-import { eq, desc } from 'drizzle-orm';
+import { eq } from 'drizzle-orm';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 
@@ -32,6 +32,33 @@ export async function createProject(formData: FormData) {
   redirect('/admin/projects');
 }
 
+export async function updateProject(id: number, formData: FormData) {
+  const title = formData.get('title') as string;
+  const role = formData.get('role') as string;
+  const duration = formData.get('duration') as string;
+  const image = formData.get('image') as string;
+  const alt = formData.get('alt') as string;
+  const roleColor = formData.get('roleColor') as string;
+  const order = parseInt(formData.get('order') as string) || 0;
+
+  await db
+    .update(projects)
+    .set({
+      title,
+      role,
+      duration,
+      image,
+      alt,
+      roleColor,
+      order,
+    })
+    .where(eq(projects.id, id));
+
+  revalidatePath('/admin/projects');
+  revalidatePath('/');
+  redirect('/admin/projects');
+}
+
 export async function deleteProject(id: number) {
   await db.delete(projects).where(eq(projects.id, id));
   revalidatePath('/admin/projects');
@@ -54,6 +81,29 @@ export async function createTestimonial(formData: FormData) {
     authorImage,
     order,
   });
+
+  revalidatePath('/admin/testimonials');
+  revalidatePath('/');
+  redirect('/admin/testimonials');
+}
+
+export async function updateTestimonial(id: number, formData: FormData) {
+  const content = formData.get('content') as string;
+  const authorName = formData.get('authorName') as string;
+  const authorRole = formData.get('authorRole') as string;
+  const authorImage = formData.get('authorImage') as string;
+  const order = parseInt(formData.get('order') as string) || 0;
+
+  await db
+    .update(testimonials)
+    .set({
+      content,
+      authorName,
+      authorRole,
+      authorImage,
+      order,
+    })
+    .where(eq(testimonials.id, id));
 
   revalidatePath('/admin/testimonials');
   revalidatePath('/');

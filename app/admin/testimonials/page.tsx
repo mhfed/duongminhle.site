@@ -3,6 +3,7 @@ import { testimonials } from '@/app/lib/schema';
 import { desc } from 'drizzle-orm';
 import { deleteTestimonial } from '@/app/lib/actions';
 import Image from 'next/image';
+import Link from 'next/link';
 
 export default async function AdminTestimonialsPage() {
   const allTestimonials = await db
@@ -14,12 +15,12 @@ export default async function AdminTestimonialsPage() {
     <div>
       <div className='flex items-center justify-between mb-8'>
         <h1 className='text-3xl font-bold font-display'>Testimonials</h1>
-        <a
+        <Link
           href='/admin/testimonials/new'
           className='bg-primary text-white px-4 py-2 rounded-lg hover:brightness-110 transition-all'
         >
           + New Testimonial
-        </a>
+        </Link>
       </div>
 
       <div className='bg-white dark:bg-zinc-900 rounded-xl border border-gray-200 dark:border-gray-800 overflow-hidden'>
@@ -68,11 +69,19 @@ export default async function AdminTestimonialsPage() {
                 </td>
                 <td className='p-4 text-gray-500'>{testimonial.order}</td>
                 <td className='p-4 text-right'>
-                  <form action={deleteTestimonial.bind(null, testimonial.id)}>
-                    <button className='text-red-500 hover:text-red-600 text-sm font-medium'>
-                      Delete
-                    </button>
-                  </form>
+                  <div className='flex items-center justify-end space-x-4'>
+                    <Link
+                      href={`/admin/testimonials/${testimonial.id}`}
+                      className='text-primary hover:text-primary/80 text-sm font-medium'
+                    >
+                      Edit
+                    </Link>
+                    <form action={deleteTestimonial.bind(null, testimonial.id)}>
+                      <button className='text-red-500 hover:text-red-600 text-sm font-medium'>
+                        Delete
+                      </button>
+                    </form>
+                  </div>
                 </td>
               </tr>
             ))}

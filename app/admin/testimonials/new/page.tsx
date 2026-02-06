@@ -1,16 +1,17 @@
 import { createTestimonial } from '@/app/lib/actions';
+import Link from 'next/link';
 
 export default function NewTestimonialPage() {
   return (
     <div className='max-w-2xl mx-auto'>
       <div className='flex items-center justify-between mb-8'>
         <h1 className='text-3xl font-bold font-display'>New Testimonial</h1>
-        <a
+        <Link
           href='/admin/testimonials'
           className='text-gray-500 hover:text-black dark:hover:text-white'
         >
           Cancel
-        </a>
+        </Link>
       </div>
 
       <form
