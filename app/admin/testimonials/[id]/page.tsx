@@ -4,6 +4,7 @@ import { eq } from 'drizzle-orm';
 import { updateTestimonial } from '@/app/lib/actions';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
+import ImageUpload from '@/app/components/admin/ImageUpload';
 
 export default async function EditTestimonialPage({
   params,
@@ -64,14 +65,9 @@ export default async function EditTestimonialPage({
 
         <div>
           <label className='block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2'>
-            Author Image URL
+            Author Image
           </label>
-          <input
-            name='authorImage'
-            defaultValue={testimonial.authorImage}
-            required
-            className='w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-700 bg-transparent focus:ring-2 focus:ring-primary focus:outline-none'
-          />
+          <ImageUpload name='authorImage' value={testimonial.authorImage} />
         </div>
 
         <div>

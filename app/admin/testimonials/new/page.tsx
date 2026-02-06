@@ -1,5 +1,6 @@
 import { createTestimonial } from '@/app/lib/actions';
 import Link from 'next/link';
+import ImageUpload from '@/app/components/admin/ImageUpload';
 
 export default function NewTestimonialPage() {
   return (
@@ -44,14 +45,9 @@ export default function NewTestimonialPage() {
 
         <div>
           <label className='block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2'>
-            Author Image URL
+            Author Image
           </label>
-          <input
-            name='authorImage'
-            required
-            className='w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-700 bg-transparent focus:ring-2 focus:ring-primary focus:outline-none'
-            placeholder='https://...'
-          />
+          <ImageUpload name='authorImage' />
         </div>
 
         <div>

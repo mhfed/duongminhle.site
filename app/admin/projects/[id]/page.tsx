@@ -4,6 +4,7 @@ import { eq } from 'drizzle-orm';
 import { updateProject } from '@/app/lib/actions';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
+import ImageUpload from '@/app/components/admin/ImageUpload';
 
 export default async function EditProjectPage({
   params,
@@ -91,14 +92,9 @@ export default async function EditProjectPage({
 
         <div>
           <label className='block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2'>
-            Image URL
+            Image
           </label>
-          <input
-            name='image'
-            defaultValue={project.image}
-            required
-            className='w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-700 bg-transparent focus:ring-2 focus:ring-primary focus:outline-none'
-          />
+          <ImageUpload name='image' value={project.image} />
         </div>
 
         <div>
