@@ -1,49 +1,20 @@
 import Image from 'next/image';
 
-const projects = [
-  {
-    id: 1,
-    role: 'UX Research; Interface Design',
-    title: 'Artceps',
-    duration: '3 months',
-    image:
-      'https://lh3.googleusercontent.com/aida-public/AB6AXuAlmBnqxDIGkyaRz5CIIlAXGjnekmVgmaLmLXInLYWMiAYL3uldmjk9TOAxh9DnFF9eQvJhCOYF8R3BYFp8i_O4MJ7WbmvpF9_jxGmkM8FqeP3bIZvQG52A5Ldu33nNFHgqN_batKo0mJ8bgoqIfwAC5bWD8GOv_BPPan7bExe0_tSn_HR08SSeiTPJpRzHniHFHtmkgu0qnQMccxTvlTcNrreZAPxSPRtPoflY3eEGc-YUdqJoJQhoRESjZ4PTkTocz0x3uYW2CoNc',
-    alt: 'Mobile App Mockup',
-    roleColor: 'text-gray-500', // Default color
-  },
-  {
-    id: 2,
-    role: 'Service Design',
-    title: 'Sahayak',
-    duration: '2 months',
-    image:
-      'https://lh3.googleusercontent.com/aida-public/AB6AXuBIGqsINpCsqNyBlBEKSgsJR_HvTgVqrUg0iWD2pkEw2lnG5b9chFl1P9OfiK7gkU_14U8_gvj0YBZnP65qz5pT1AJw5iZXTBUEmojQlTZhPatF4M5vXJJeUf2jcNfUT7mjzXlrPSiSdGdnn2hDSxOhhcRRFtycjuSkUkVGCLLP61adr8nlfkCX-KsnYyuDrItHXEa3Cl-PzDJpprooJnDDpxOEt4lpV69wALdbaCbTv7b2oOR7Qblzqax0fCDDx3KDPS5f-pYNgGfl',
-    alt: 'Sahayak App Mockup',
-    roleColor: 'text-gray-500',
-  },
-  {
-    id: 3,
-    role: 'INTERNSHIP',
-    title: 'STEMpedia',
-    duration: '5 months',
-    image:
-      'https://lh3.googleusercontent.com/aida-public/AB6AXuDWp9Rdpeglq-S9p5NgLPUhhNHzI7q4NNbCEN26tDh8fDiBiNtQUQBTsji3R0KcNK4B2tvwHoiEQbbVj6ODg7OftLe-1EQxi8R63_19S4y6Mday63ASXCouB0ARJalaGFj0GxxnT2QF-8Jpa5xG1NYaliWhfOF3vN6g6ijqpBuFpGr59YFaupjTZNlT24U92vzy1hlGf_9AZYyaPnHhhFF7UAZujH6gOFdawORjADEnhVBEQAp78dP1ODfdrJKKNS6qcYIltX2YmrGh',
-    alt: 'Dashboard Mockup',
-    roleColor: 'text-primary', // Highlighted color
-  },
-  {
-    id: 4,
-    role: 'INTERNSHIP',
-    title: 'Benjamins Money',
-    duration: '5 months',
-    image:
-      'https://lh3.googleusercontent.com/aida-public/AB6AXuDiAlpHrOkl164OqIK1OZ8t94TR_wIAiv6t5C93fnGGXISapldBsiBCaxQt67cEN0PuAx3cgbevz3oKptQE43IKBd-WjFoaDMIFMqw2s0FY4Lu3Ce3SbL8qVH_NhCGwoxv35rzu0eL8U8A4RTIjLtIvCYjGymOEo4wTBwWbzUo97_U1gRrXks66mp28IqQYoYTuiTb3Indz-79ms7kVMgmsC_94X8ybDUaj1D5fq2k3ctNrj6gPdhPK96rRCBTVPX9RNk_FNpt_fChG',
-    alt: 'Fintech Web Mockup',
-    roleColor: 'text-gray-500',
-  },
-];
+interface Project {
+  id: number;
+  title: string;
+  role: string;
+  duration: string;
+  image: string;
+  alt: string; // Ensure this exists in your DB schema passed down
+  roleColor: string;
+}
 
-export default function Projects() {
+export default function Projects({ projects }: { projects: Project[] }) {
+  if (!projects || projects.length === 0) {
+    return null; // Or a placeholder
+  }
+
   return (
     <section
       className='border-b border-border-light dark:border-border-dark scroll-mt-20'
@@ -106,7 +77,9 @@ export default function Projects() {
                 </div>
                 <div
                   className={`w-12 h-12 rounded-full border border-gray-600 flex items-center justify-center group-hover:bg-white group-hover:text-black group-hover:shadow-[0_0_15px_rgba(255,255,255,0.5)] transition-all duration-300 transform group-hover:scale-110 ${
-                    project.id === 3 ? 'bg-white text-black' : ''
+                    project.roleColor === 'text-primary'
+                      ? 'bg-white text-black'
+                      : ''
                   }`}
                 >
                   <span className='material-icons transform -rotate-45'>
@@ -118,9 +91,9 @@ export default function Projects() {
 
             {/* Right Image */}
             <div className='lg:col-span-8 bg-surface-dark relative overflow-hidden p-6'>
-              <div className='relative w-full h-full overflow-hidden'>
+              <div className='project-image-container relative w-full h-full overflow-hidden'>
                 <Image
-                  alt={project.alt}
+                  alt={project.alt || 'Project Image'}
                   className='object-cover transform transition-transform duration-700 group-hover:scale-105'
                   src={project.image}
                   fill

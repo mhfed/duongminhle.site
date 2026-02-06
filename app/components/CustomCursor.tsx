@@ -2,8 +2,10 @@
 
 import { useEffect, useState } from 'react';
 import { motion, useSpring, useMotionValue } from 'framer-motion';
+import { usePathname } from 'next/navigation';
 
 export default function CustomCursor() {
+  const pathname = usePathname();
   const [isHovered, setIsHovered] = useState(false);
   const cursorX = useMotionValue(-100);
   const cursorY = useMotionValue(-100);
@@ -43,6 +45,7 @@ export default function CustomCursor() {
     };
   }, [cursorX, cursorY]);
 
+  if (pathname?.includes('/admin')) return null;
   return (
     <>
       <motion.div
