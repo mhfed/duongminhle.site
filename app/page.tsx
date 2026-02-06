@@ -1,6 +1,6 @@
 import { db } from '@/app/lib/db';
 import { projects, testimonials } from '@/app/lib/schema';
-import { desc } from 'drizzle-orm';
+import { desc, InferSelectModel } from 'drizzle-orm';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import Hero from './components/sections/Hero';
@@ -13,7 +13,8 @@ import HomeAnimations from './components/HomeAnimations';
 export const dynamic = 'force-dynamic'; // Ensure new content is reflected immediately
 
 export default async function Home() {
-  let projectsData, testimonialsData;
+  let projectsData: InferSelectModel<typeof projects>[] = [];
+  let testimonialsData: InferSelectModel<typeof testimonials>[] = [];
 
   try {
     projectsData = await db
