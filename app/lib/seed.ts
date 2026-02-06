@@ -1,7 +1,6 @@
 import { db } from './db';
-import { projects, testimonials, users } from './schema';
+import { projects, testimonials } from './schema';
 import * as dotenv from 'dotenv';
-import bcrypt from 'bcryptjs';
 
 dotenv.config({ path: '.env.local' });
 
@@ -83,19 +82,7 @@ async function seed() {
     },
   ];
 
-  // Admin User
-  const hashedPassword = await bcrypt.hash('password123', 10);
-  const adminUser = {
-    name: 'Admin',
-    email: 'admin@example.com',
-    password: hashedPassword,
-    role: 'admin',
-  };
-
   try {
-    // Insert Users
-    await db.insert(users).values(adminUser).onConflictDoNothing();
-
     // Insert Projects
     for (const project of projectsData) {
       await db.insert(projects).values(project);
