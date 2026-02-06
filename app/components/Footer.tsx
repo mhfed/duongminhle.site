@@ -1,4 +1,24 @@
-export default function Footer() {
+import { defaultSettings } from '@/app/lib/settings';
+
+export default function Footer({
+  settings = defaultSettings.global,
+}: {
+  settings?: any;
+}) {
+  const { footer } = settings;
+  // Fallback if settings are missing (e.g. partial updates)
+  const contactEmail = footer?.email || 'duongminhle@gmail.com';
+  const contactPhone = footer?.phone || '+91 9890690762';
+  const locations = footer?.location || [
+    'Gandhinagar, Gujarat',
+    'Pune, Maharashtra',
+  ];
+  const socials = footer?.socials || {
+    instagram: '#',
+    linkedin: '#',
+    behance: '#',
+  };
+
   return (
     <footer className='bg-surface-dark dark:bg-black text-white pt-20 pb-8 border-t border-border-dark'>
       <div className='container mx-auto px-6'>
@@ -9,20 +29,24 @@ export default function Footer() {
             </h5>
             <a
               className='block text-xl md:text-2xl hover:text-primary transition-colors mb-2'
-              href='mailto:duongminhle@gmail.com'
+              href={`mailto:${contactEmail}`}
             >
-              duongminhle@gmail.com
+              {contactEmail}
             </a>
             <p className='text-xl text-gray-400 font-light'>
-              <span className='text-primary font-bold'>+</span>91 9890690762
+              <span className='text-primary font-bold'>+</span>
+              {contactPhone.replace('+', '')}
             </p>
           </div>
           <div>
             <h5 className='text-xs font-bold text-gray-500 uppercase tracking-widest mb-6'>
               Location
             </h5>
-            <p className='text-xl font-light'>Gandhinagar, Gujarat</p>
-            <p className='text-xl font-light'>Pune, Maharashtra</p>
+            {locations.map((loc: string, index: number) => (
+              <p key={index} className='text-xl font-light'>
+                {loc}
+              </p>
+            ))}
           </div>
           <div>
             <h5 className='text-xs font-bold text-gray-500 uppercase tracking-widest mb-6'>
@@ -31,25 +55,31 @@ export default function Footer() {
             <div className='flex space-x-4'>
               <a
                 className='w-12 h-12 rounded-full border border-gray-700 flex items-center justify-center hover:border-primary hover:text-primary hover:scale-110 transition-all duration-300'
-                href='#'
+                href={socials.instagram}
+                target='_blank'
+                rel='noopener noreferrer'
               >
                 <span className='font-bold text-sm'>IG</span>
               </a>
               <a
                 className='w-12 h-12 rounded-full border border-gray-700 flex items-center justify-center hover:border-primary hover:text-primary hover:scale-110 transition-all duration-300'
-                href='#'
+                href={socials.linkedin}
+                target='_blank'
+                rel='noopener noreferrer'
               >
                 <span className='font-bold text-sm'>in</span>
               </a>
               <a
                 className='w-12 h-12 rounded-full border border-gray-700 flex items-center justify-center hover:border-primary hover:text-primary hover:scale-110 transition-all duration-300'
-                href='#'
+                href={socials.behance}
+                target='_blank'
+                rel='noopener noreferrer'
               >
                 <span className='font-bold text-sm'>Bē</span>
               </a>
               <a
                 className='w-12 h-12 rounded-full border border-gray-700 flex items-center justify-center hover:border-primary hover:text-primary hover:scale-110 transition-all duration-300'
-                href='#'
+                href={`mailto:${contactEmail}`}
               >
                 <span className='material-icons text-sm'>mail</span>
               </a>

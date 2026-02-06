@@ -1,5 +1,6 @@
 import { db } from '@/app/lib/db';
 import { projects, testimonials } from '@/app/lib/schema';
+import { getSettings } from '@/app/lib/settings';
 import { desc, InferSelectModel } from 'drizzle-orm';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
@@ -15,6 +16,7 @@ export const dynamic = 'force-dynamic'; // Ensure new content is reflected immed
 export default async function Home() {
   let projectsData: InferSelectModel<typeof projects>[] = [];
   let testimonialsData: InferSelectModel<typeof testimonials>[] = [];
+  let globalSettings, heroSettings, aboutTransitionSettings, etcetraSettings;
 
   try {
     projectsData = await db
@@ -25,6 +27,11 @@ export default async function Home() {
       .select()
       .from(testimonials)
       .orderBy(desc(testimonials.order));
+
+    globalSettings = await getSettings('global');
+    heroSettings = await getSettings('hero');
+    aboutTransitionSettings = await getSettings('about_transition');
+    etcetraSettings = await getSettings('etcetra');
   } catch (error) {
     console.error(
       'Failed to fetch data, falling back to empty or static if desired',
@@ -37,13 +44,13 @@ export default async function Home() {
   return (
     <div>
       <HomeAnimations />
-      <Navbar />
-      <Hero />
+      <Navbar settings={globalSettings} />
+      <Hero settings={heroSettings} />
       <Projects projects={projectsData} />
-      <AboutTransition />
-      <Etcetra />
+      <AboutTransition settings={aboutTransitionSettings} />
+      <Etcetra settings={etcetraSettings} />
       <Testimonials testimonials={testimonialsData} />
-      <Footer />
+      <Footer settings={globalSettings} />
     </div>
   );
 }

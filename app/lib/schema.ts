@@ -21,3 +21,8 @@ export const testimonials = pgTable('testimonials', {
   order: integer('order').default(0).notNull(),
   createdAt: timestamp('created_at').defaultNow().notNull(),
 });
+
+export const settings = pgTable('settings', {
+  key: text('key').primaryKey(),
+  value: text('value').notNull(), // using text to store JSON string as Drizzle generic jsonb support varies or sometimes needs simpler handling
+});

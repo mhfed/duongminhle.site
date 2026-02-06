@@ -1,6 +1,36 @@
 import Image from 'next/image';
+import { defaultSettings } from '@/app/lib/settings';
 
-export default function Hero() {
+export default function Hero({
+  settings = defaultSettings.hero,
+}: {
+  settings?: any;
+}) {
+  const { title, subtitle, bio, images } = settings;
+
+  // Fallbacks
+  const firstName = title?.first || 'Duong';
+  const lastName = title?.last || 'Minh Le';
+  const subLine1 = subtitle?.line1 || 'Every Detail Tells A';
+  const subLine2 = subtitle?.line2 || 'Story Worth';
+  const highlight = subtitle?.highlight || 'Exploring';
+  const bioText =
+    bio ||
+    "I'm a User Experience Designer, artist and storyteller. I believe in solving meaningful problems through elegant, creative solutions. My passion lies in the subtle intersection of art and technology.\n\nCurrently studying Interaction Design, B.Des at UID, Gujarat";
+
+  const img1 =
+    images?.img1 ||
+    'https://lh3.googleusercontent.com/aida-public/AB6AXuD7BfwYkJ3wuAlEYcxseZvzLefQYzqAA4iH0dPyn4BdYhZN24dTL01WOHCrn3FP_L4Xmwg4dfQBHawF8g5CYK2RLRQ6OkfJbEJBr6g2FTQluSJww3W1SwMM-d4CKCRMPXMH2GdxNBW8IXSgKjCK6IPzo-qJIXxIxG3IAHSC81BIbrlwuSTB0kS_7XJBcEg0_mFOyU1ylgQJfWNpqeRXijIl6tD0oFtVehfcAii_J5bIK-vVa18cozT7PJoqnfSj4B4fqIFnQMm3jPLE';
+  const img2 =
+    images?.img2 ||
+    'https://lh3.googleusercontent.com/aida-public/AB6AXuAqSao1pwF2Yzq9R9GxW1uatJTUCwn39iZw8PG1Dil7nrBas30T26LKQkJumeOjbJbMEUHlaW4ywsI7c8DBwCm1LOmrccghm1K5brY2bGI_2QO3G_CNCzzfFSaoIOj_UdbOnItuXMN_ybRnWs1upEZHrfxiG1W4C16C9EZtqxJKJmHnEFJ4qlpkD6O9xdIqF7A_aPKFq49RuNRFzoaLJVBb50nCDrd5nZHOgutlGQWmQkjppWjsZeS-P_Ay8b5VfFHE07Fy6uR8H5Sa';
+  const img3 =
+    images?.img3 ||
+    'https://lh3.googleusercontent.com/aida-public/AB6AXuDByAZlq0YuAu_NWfEPItpBexhie27_nPbzic9qIc7xEaSVWMqLneVUM0pYQx5pR-1jcHGDZuf8O6fkmdCesDMEIyb6gTdGuYbSUtY9FssIeauSLMxILqXs8AIbCUCEgYUW7HHxjH_lOpnd3bMHa3VJt8YeSyhJ-YoUWQrI_SJSbOKSenY_d698g4pbGwPfYmQqjI7XNJ1AD_LN7KrtuKrcC9T0Q3Eox7UyhdAaG61B8ayuKbYpSFf-qqe-FT1MR8eu4EzLffOfP9iL';
+  const img4 =
+    images?.img4 ||
+    'https://lh3.googleusercontent.com/aida-public/AB6AXuDrKyl_SXfYwE425QFtax06f_VoRuRZaTMDM0nTEpdClw8w7IVGDm2W1siTNELDh9ApMyDteTEz5w0q5VPtFwnPjvsWX-G0DPmbt3CV-Pi2tEHf8bbC67a8CLzFf4jEHAIyf7Ts66rbH4Cdj7AsGmSnDZuaDGX4DdRbG_KwuFmk614xSB3R9TFSO-kOQ5Hug2ChgMwtbPF0PFoQiRfczbOby3y3ZsqVxXQcuenMKfMgHORYLCah4pIuV50li6kQjJ2B81eZulyrU0i2';
+
   return (
     <header
       className='relative h-screen flex flex-col pt-24 border-b border-border-light dark:border-border-dark overflow-hidden'
@@ -17,9 +47,9 @@ export default function Hero() {
             <div className='flex items-start justify-between'>
               <div className='reveal-on-scroll hero-title'>
                 <h1 className='text-6xl md:text-8xl font-display font-bold leading-none uppercase tracking-tighter'>
-                  Duong
+                  {firstName}
                   <br />
-                  Minh Le
+                  {lastName}
                 </h1>
               </div>
               <div className='hidden md:flex w-24 h-24 bg-primary text-white items-center justify-center shrink-0 ml-4 shadow-lg shadow-primary/30 animate-[pulse_3s_ease-in-out_infinite]'>
@@ -36,34 +66,27 @@ export default function Hero() {
           </div>
 
           {/* 2. Top Right: Statement */}
-          {/* 2. Top Right: Statement */}
           <div className='border-b border-border-light dark:border-gray-800 p-8 md:p-12 flex flex-col justify-end relative'>
             <div className='absolute inset-0 bg-grid-light dark:bg-grid-dark bg-grid opacity-[0.05] dark:opacity-[0.05] pointer-events-none z-0'></div>
             <div className='absolute bottom-0 left-0 w-4 h-4 border-b border-l border-white/20 hidden lg:block z-10'></div>
             <div className='reveal-on-scroll relative z-10'>
               <h2 className='text-4xl md:text-5xl font-display font-bold leading-tight'>
-                Every Detail Tells A<br />
-                Story Worth
+                {subLine1}
+                <br />
+                {subLine2}
                 <br />
                 <span className='font-script text-6xl text-gray-500 font-normal lowercase ml-2 border-b-2 border-primary/50 inline-block pb-2'>
-                  Exploring
+                  {highlight}
                 </span>
               </h2>
             </div>
           </div>
 
           {/* 3. Bottom Left: Bio */}
-          {/* 3. Bottom Left: Bio */}
           <div className='lg:border-r border-border-light dark:border-gray-800 p-8 md:p-12 flex flex-col justify-between relative'>
             <div className='absolute inset-0 bg-grid-light dark:bg-grid-dark bg-grid opacity-[0.05] dark:opacity-[0.05] pointer-events-none z-0'></div>
-            <div className='max-w-md text-gray-600 dark:text-gray-400 text-lg leading-relaxed reveal-on-scroll relative z-10'>
-              I&apos;m a User Experience Designer, artist and storyteller. I
-              believe in solving meaningful problems through elegant, creative
-              solutions. My passion lies in the subtle intersection of art and
-              technology.
-              <br />
-              <br />
-              Currently studying Interaction Design, B.Des at UID, Gujarat
+            <div className='max-w-md text-gray-600 dark:text-gray-400 text-lg leading-relaxed reveal-on-scroll relative z-10 whitespace-pre-wrap'>
+              {bioText}
             </div>
             <div className='mt-8 flex items-center space-x-4 reveal-on-scroll relative z-10'>
               <div className='h-10 w-0.5 bg-primary'></div>
@@ -81,7 +104,7 @@ export default function Hero() {
             <div className='grid grid-cols-2 h-full p-4'>
               <div className='relative border-r border-b border-gray-800/50 grayscale hover:grayscale-0 transition-all duration-500'>
                 <Image
-                  src='https://lh3.googleusercontent.com/aida-public/AB6AXuD7BfwYkJ3wuAlEYcxseZvzLefQYzqAA4iH0dPyn4BdYhZN24dTL01WOHCrn3FP_L4Xmwg4dfQBHawF8g5CYK2RLRQ6OkfJbEJBr6g2FTQluSJww3W1SwMM-d4CKCRMPXMH2GdxNBW8IXSgKjCK6IPzo-qJIXxIxG3IAHSC81BIbrlwuSTB0kS_7XJBcEg0_mFOyU1ylgQJfWNpqeRXijIl6tD0oFtVehfcAii_J5bIK-vVa18cozT7PJoqnfSj4B4fqIFnQMm3jPLE'
+                  src={img1}
                   alt='Grid Image 1'
                   fill
                   className='object-cover opacity-60 hover:opacity-100 transition-opacity'
@@ -89,7 +112,7 @@ export default function Hero() {
               </div>
               <div className='relative border-b border-gray-800/50 grayscale hover:grayscale-0 transition-all duration-500'>
                 <Image
-                  src='https://lh3.googleusercontent.com/aida-public/AB6AXuAqSao1pwF2Yzq9R9GxW1uatJTUCwn39iZw8PG1Dil7nrBas30T26LKQkJumeOjbJbMEUHlaW4ywsI7c8DBwCm1LOmrccghm1K5brY2bGI_2QO3G_CNCzzfFSaoIOj_UdbOnItuXMN_ybRnWs1upEZHrfxiG1W4C16C9EZtqxJKJmHnEFJ4qlpkD6O9xdIqF7A_aPKFq49RuNRFzoaLJVBb50nCDrd5nZHOgutlGQWmQkjppWjsZeS-P_Ay8b5VfFHE07Fy6uR8H5Sa'
+                  src={img2}
                   alt='Grid Image 2'
                   fill
                   className='object-cover opacity-60 hover:opacity-100 transition-opacity'
@@ -102,7 +125,7 @@ export default function Hero() {
                   </span>
                 </div>
                 <Image
-                  src='https://lh3.googleusercontent.com/aida-public/AB6AXuDByAZlq0YuAu_NWfEPItpBexhie27_nPbzic9qIc7xEaSVWMqLneVUM0pYQx5pR-1jcHGDZuf8O6fkmdCesDMEIyb6gTdGuYbSUtY9FssIeauSLMxILqXs8AIbCUCEgYUW7HHxjH_lOpnd3bMHa3VJt8YeSyhJ-YoUWQrI_SJSbOKSenY_d698g4pbGwPfYmQqjI7XNJ1AD_LN7KrtuKrcC9T0Q3Eox7UyhdAaG61B8ayuKbYpSFf-qqe-FT1MR8eu4EzLffOfP9iL'
+                  src={img3}
                   alt='Grid Image 3'
                   fill
                   className='object-cover opacity-60 hover:opacity-100 transition-opacity'
@@ -110,7 +133,7 @@ export default function Hero() {
               </div>
               <div className='relative grayscale hover:grayscale-0 transition-all duration-500'>
                 <Image
-                  src='https://lh3.googleusercontent.com/aida-public/AB6AXuDrKyl_SXfYwE425QFtax06f_VoRuRZaTMDM0nTEpdClw8w7IVGDm2W1siTNELDh9ApMyDteTEz5w0q5VPtFwnPjvsWX-G0DPmbt3CV-Pi2tEHf8bbC67a8CLzFf4jEHAIyf7Ts66rbH4Cdj7AsGmSnDZuaDGX4DdRbG_KwuFmk614xSB3R9TFSO-kOQ5Hug2ChgMwtbPF0PFoQiRfczbOby3y3ZsqVxXQcuenMKfMgHORYLCah4pIuV50li6kQjJ2B81eZulyrU0i2'
+                  src={img4}
                   alt='Grid Image 4'
                   fill
                   className='object-cover opacity-60 hover:opacity-100 transition-opacity'
