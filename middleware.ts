@@ -16,13 +16,24 @@ function checkBasicAuth(request: NextRequest): boolean {
     const adminUser = process.env.ADMIN_USER;
     const adminPassword = process.env.ADMIN_PASSWORD;
 
+    console.log('--- BASIC AUTH DEBUG ---');
+    console.log('Auth Header:', authHeader ? 'Present' : 'Missing');
+    console.log('Provided Username:', username);
+    console.log('Provided Password (len):', password?.length);
+    console.log('Expected Username:', adminUser);
+    console.log('Expected Password (len):', adminPassword?.length);
+
     if (!adminUser || !adminPassword) {
       console.error('Missing ENV variables');
       return false;
     }
 
-    return username === adminUser && password === adminPassword;
+    const isValid =
+      username === adminUser?.trim() && password === adminPassword?.trim();
+    console.log('Is Valid:', isValid);
+    return isValid;
   } catch (e) {
+    console.error('Auth Error:', e);
     return false;
   }
 }
