@@ -7,29 +7,29 @@ function checkBasicAuth(request: NextRequest): boolean {
     return false;
   }
 
-  const base64Credentials = authHeader.split(' ')[1];
-  const credentials = Buffer.from(base64Credentials, 'base64').toString(
-    'utf-8',
-  );
-  const [username, password] = credentials.split(':');
+  try {
+    const base64Credentials = authHeader.split(' ')[1];
+    // Sử dụng atob để an toàn hơn trên Edge Runtime
+    const credentials = atob(base64Credentials);
+    const [username, password] = credentials.split(':');
 
-  const adminUser = process.env.ADMIN_USER;
-  const adminPassword = process.env.ADMIN_PASSWORD;
+    const adminUser = process.env.ADMIN_USER;
+    const adminPassword = process.env.ADMIN_PASSWORD;
 
-  if (!adminUser || !adminPassword) {
-    console.error(
-      'ADMIN_USER or ADMIN_PASSWORD environment variables are not set',
-    );
+    if (!adminUser || !adminPassword) {
+      console.error('Missing ENV variables');
+      return false;
+    }
+
+    return username === adminUser && password === adminPassword;
+  } catch (e) {
     return false;
   }
-
-  return username === adminUser?.trim() && password === adminPassword?.trim();
 }
 
 export default function proxy(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
 
-  // Handle /admin routes
   if (pathname.startsWith('/admin')) {
     if (!checkBasicAuth(request)) {
       return new NextResponse('Unauthorized', {
@@ -45,5 +45,5 @@ export default function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/((?!api|_next|_vercel|.*\\..*).*)'],
+  matcher: ['/admin/:path*', '/admin'],
 };
