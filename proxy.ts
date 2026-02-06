@@ -23,7 +23,7 @@ function checkBasicAuth(request: NextRequest): boolean {
     return false;
   }
 
-  return username === adminUser && password === adminPassword;
+  return username === adminUser?.trim() && password === adminPassword?.trim();
 }
 
 export default function proxy(request: NextRequest) {
@@ -45,5 +45,5 @@ export default function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/admin/:path*'],
+  matcher: ['/admin', '/admin/:path*'],
 };
