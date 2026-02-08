@@ -1,4 +1,5 @@
 import { defaultSettings } from '@/app/lib/settings';
+import Link from 'next/link';
 
 export default function Footer({
   settings = defaultSettings.global,
@@ -53,22 +54,22 @@ export default function Footer({
               Find Me Here
             </h5>
             <div className='flex space-x-4'>
-              <a
+              <Link
                 className='w-12 h-12 rounded-full border border-gray-700 flex items-center justify-center hover:border-primary hover:text-primary hover:scale-110 transition-all duration-300'
                 href={socials.instagram}
                 target='_blank'
                 rel='noopener noreferrer'
               >
                 <span className='font-bold text-sm'>IG</span>
-              </a>
-              <a
+              </Link>
+              <Link
                 className='w-12 h-12 rounded-full border border-gray-700 flex items-center justify-center hover:border-primary hover:text-primary hover:scale-110 transition-all duration-300'
                 href={socials.linkedin}
                 target='_blank'
                 rel='noopener noreferrer'
               >
                 <span className='font-bold text-sm'>in</span>
-              </a>
+              </Link>
               <a
                 className='w-12 h-12 rounded-full border border-gray-700 flex items-center justify-center hover:border-primary hover:text-primary hover:scale-110 transition-all duration-300'
                 href={socials.behance}
@@ -77,27 +78,33 @@ export default function Footer({
               >
                 <span className='font-bold text-sm'>Bē</span>
               </a>
-              <a
+              <Link
                 className='w-12 h-12 rounded-full border border-gray-700 flex items-center justify-center hover:border-primary hover:text-primary hover:scale-110 transition-all duration-300'
                 href={`mailto:${contactEmail}`}
               >
                 <span className='material-icons text-sm'>mail</span>
-              </a>
+              </Link>
             </div>
           </div>
         </div>
         <div className='flex flex-col md:flex-row justify-between items-center text-xs text-gray-500 border-t border-gray-900 pt-8 uppercase tracking-widest'>
           <p>© 2025 Duong Minh Le. All right reserved</p>
           <div className='flex space-x-6 my-4 md:my-0'>
-            <a className='hover:text-white transition-colors' href='#about'>
+            <Link className='hover:text-white transition-colors' href='/about'>
               About
-            </a>
-            <a className='hover:text-white transition-colors' href='#projects'>
+            </Link>
+            <Link
+              className='hover:text-white transition-colors'
+              href='/projects'
+            >
               Projects
-            </a>
-            <a className='hover:text-white transition-colors' href='#etcetra'>
+            </Link>
+            <Link
+              className='hover:text-white transition-colors'
+              href='/etcetra'
+            >
               Etcetra
-            </a>
+            </Link>
           </div>
           <div className='flex items-center space-x-2 bg-white text-black px-3 py-1 rounded cursor-pointer hover:bg-gray-200 transition-colors'>
             <span className='material-icons text-sm'>design_services</span>

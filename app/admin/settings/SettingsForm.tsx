@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { saveSettings } from '@/app/actions/settings';
-import { SettingsKey, defaultSettings } from '@/app/lib/settings';
+import { SettingsKey } from '@/app/lib/settings';
 import ImageUpload from '@/app/components/admin/ImageUpload';
 
 export default function SettingsForm({
@@ -112,6 +112,115 @@ export default function SettingsForm({
           <div className='space-y-6'>
             <h3 className='text-lg font-bold'>Site Information</h3>
             {renderInput('Site Name', 'siteName')}
+
+            <div className='mt-8'>
+              <div className='flex justify-between items-center mb-4 border-b pb-2 dark:border-zinc-700'>
+                <h3 className='text-lg font-bold'>Navigation Links</h3>
+                <button
+                  onClick={() => {
+                    const current = settings.global?.navLinks || [];
+                    handleChange('global', 'navLinks', [
+                      ...current,
+                      { label: 'New Link', href: '#', id: `nav-${Date.now()}` },
+                    ]);
+                  }}
+                  className='text-sm bg-primary text-white px-3 py-1 rounded hover:bg-primary/90'
+                >
+                  + Add Link
+                </button>
+              </div>
+              <div className='space-y-4'>
+                {(settings.global?.navLinks || []).map(
+                  (link: any, index: number) => (
+                    <div
+                      key={index}
+                      className='p-4 border rounded bg-zinc-50 dark:bg-zinc-900 dark:border-zinc-800 relative'
+                    >
+                      <button
+                        onClick={() => {
+                          const current = [
+                            ...(settings.global?.navLinks || []),
+                          ];
+                          current.splice(index, 1);
+                          handleChange('global', 'navLinks', current);
+                        }}
+                        className='absolute top-2 right-2 p-1 text-gray-400 hover:text-red-500 transition-colors'
+                        title='Remove'
+                      >
+                        <svg
+                          xmlns='http://www.w3.org/2000/svg'
+                          width='16'
+                          height='16'
+                          viewBox='0 0 24 24'
+                          fill='none'
+                          stroke='currentColor'
+                          strokeWidth='2'
+                          strokeLinecap='round'
+                          strokeLinejoin='round'
+                        >
+                          <path d='M18 6 6 18' />
+                          <path d='m6 6 12 12' />
+                        </svg>
+                      </button>
+                      <div className='grid grid-cols-1 md:grid-cols-3 gap-4'>
+                        <div>
+                          <label className='block text-xs font-medium mb-1 text-gray-500'>
+                            Label
+                          </label>
+                          <input
+                            type='text'
+                            className='w-full p-2 border rounded dark:bg-zinc-800 dark:border-gray-700 text-sm'
+                            value={link.label}
+                            onChange={(e) =>
+                              handleChange(
+                                'global',
+                                `navLinks.${index}.label`,
+                                e.target.value,
+                              )
+                            }
+                          />
+                        </div>
+                        <div>
+                          <label className='block text-xs font-medium mb-1 text-gray-500'>
+                            Href
+                          </label>
+                          <input
+                            type='text'
+                            className='w-full p-2 border rounded dark:bg-zinc-800 dark:border-gray-700 text-sm'
+                            value={link.href}
+                            onChange={(e) =>
+                              handleChange(
+                                'global',
+                                `navLinks.${index}.href`,
+                                e.target.value,
+                              )
+                            }
+                            placeholder='#id or /url'
+                          />
+                        </div>
+                        <div>
+                          <label className='block text-xs font-medium mb-1 text-gray-500'>
+                            ID (HTML id)
+                          </label>
+                          <input
+                            type='text'
+                            className='w-full p-2 border rounded dark:bg-zinc-800 dark:border-gray-700 text-sm'
+                            value={link.id}
+                            onChange={(e) =>
+                              handleChange(
+                                'global',
+                                `navLinks.${index}.id`,
+                                e.target.value,
+                              )
+                            }
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  ),
+                )}
+              </div>
+            </div>
 
             <h3 className='text-lg font-bold mt-8'>Footer Contact</h3>
             {renderInput('Email', 'footer.email')}

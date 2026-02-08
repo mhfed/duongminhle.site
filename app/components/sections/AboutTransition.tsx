@@ -1,4 +1,5 @@
 import { defaultSettings } from '@/app/lib/settings';
+import Link from 'next/link';
 
 export default function AboutTransition({
   settings = defaultSettings.about_transition,
@@ -21,12 +22,12 @@ export default function AboutTransition({
         <h3 className='text-3xl md:text-4xl font-medium mb-8 text-white'>
           {displayText}
         </h3>
-        <a
+        <Link
           className='inline-block px-8 py-3 rounded-full border border-gray-500 text-white hover:bg-white hover:text-black hover:scale-110 hover:shadow-lg transition-all duration-300 uppercase text-sm tracking-widest'
-          href='#etcetra'
+          href='/etcetra'
         >
           {displayButtonText}
-        </a>
+        </Link>
       </div>
     </section>
   );
