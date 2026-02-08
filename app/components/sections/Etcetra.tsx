@@ -53,7 +53,7 @@ export default function Etcetra({
         </h2>
         <div
           className='absolute top-0 left-4 md:top-10 md:left-20 max-w-[200px] p-4 border border-dashed border-gray-400 bg-background-light dark:bg-black transform -rotate-2 hover:rotate-0 hover:scale-110 transition-all duration-300 cursor-help shadow-lg reveal-on-scroll'
-          style={{ transitionDelay: '200ms' }}
+          style={{ transitionDelay: '100ms' }}
         >
           <p className='text-sm font-mono text-gray-600 dark:text-gray-300'>
             {item1}
@@ -61,7 +61,7 @@ export default function Etcetra({
         </div>
         <div
           className='absolute bottom-10 left-4 md:bottom-20 md:left-32 max-w-[180px] p-4 bg-background-light dark:bg-black border border-gray-700 hover:border-primary transition-colors duration-300 shadow-xl reveal-on-scroll'
-          style={{ transitionDelay: '300ms' }}
+          style={{ transitionDelay: '150ms' }}
         >
           <p className='text-sm font-medium text-gray-600 dark:text-gray-300'>
             {item2}
@@ -69,7 +69,7 @@ export default function Etcetra({
         </div>
         <div
           className='absolute bottom-0 md:bottom-10 left-1/2 transform -translate-x-1/2 translate-y-1/2 md:translate-y-0 reveal-on-scroll'
-          style={{ transitionDelay: '400ms' }}
+          style={{ transitionDelay: '200ms' }}
         >
           <div className='w-32 h-32 rounded-full bg-yellow-900/20 flex items-center justify-center p-2 animate-spin-slow hover:animate-none'>
             <div className='text-center text-[10px] uppercase font-bold tracking-tight text-primary p-2 border border-primary rounded-full bg-background-light dark:bg-black'>
@@ -83,7 +83,7 @@ export default function Etcetra({
         </div>
         <div
           className='absolute top-20 right-4 md:right-20 flex -space-x-4 reveal-on-scroll'
-          style={{ transitionDelay: '500ms' }}
+          style={{ transitionDelay: '250ms' }}
         >
           <Image
             alt='Person'
@@ -112,7 +112,7 @@ export default function Etcetra({
         </div>
         <div
           className='absolute bottom-20 right-10 md:right-32 max-w-[150px] text-right group cursor-pointer reveal-on-scroll'
-          style={{ transitionDelay: '600ms' }}
+          style={{ transitionDelay: '300ms' }}
         >
           <span className='text-4xl inline-block group-hover:animate-bounce'>
             {item5.emoji}
