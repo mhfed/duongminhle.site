@@ -7,7 +7,8 @@ export type SettingsKey =
   | 'hero'
   | 'about_transition'
   | 'etcetra'
-  | 'about';
+  | 'about'
+  | 'showcase_tool';
 
 export const defaultSettings: Record<SettingsKey, any> = {
   global: {
@@ -108,6 +109,15 @@ export const defaultSettings: Record<SettingsKey, any> = {
       line2_highlight: 'twice',
       signature: 'Sanjana',
     },
+  },
+  showcase_tool: {
+    title: 'The Perfect Stack',
+    subtitle:
+      'Crafting seamless digital experiences with modern technologies. My toolkit is curated for speed, scalability, and performance.',
+    innerCircle: [],
+    outerCircle: [],
+    extraOuterCircle: [],
+    showExtraOuterCircle: false,
   },
 };
 

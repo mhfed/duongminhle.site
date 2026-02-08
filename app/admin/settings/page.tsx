@@ -2,20 +2,23 @@ import { getSettings } from '@/app/lib/settings';
 import SettingsForm from './SettingsForm';
 
 export default async function SettingsPage() {
-  const [global, hero, about, etcetra] = await Promise.all([
-    getSettings('global'),
-    getSettings('hero'),
-    getSettings('about_transition'),
-    getSettings('etcetra'),
-    getSettings('about'),
-  ]);
+  const [global, hero, about_transition, etcetra, about, showcase_tool] =
+    await Promise.all([
+      getSettings('global'),
+      getSettings('hero'),
+      getSettings('about_transition'),
+      getSettings('etcetra'),
+      getSettings('about'),
+      getSettings('showcase_tool'),
+    ]);
 
   const initialSettings = {
     global,
     hero,
-    about_transition: about,
+    about_transition,
     etcetra,
     about,
+    showcase_tool,
   };
 
   return (

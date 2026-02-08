@@ -90,6 +90,7 @@ export default function SettingsForm({
             'about_transition',
             'etcetra',
             'about',
+            'showcase_tool',
           ] as SettingsKey[]
         ).map((tab) => (
           <button
@@ -302,6 +303,255 @@ export default function SettingsForm({
                 {renderInput('Line 2', 'quote.line2')}
                 {renderInput('Line 2 Highlight', 'quote.line2_highlight')}
                 {renderInput('Signature', 'quote.signature')}
+              </div>
+            </div>
+          </div>
+        )}
+
+        {activeTab === 'showcase_tool' && (
+          <div className='space-y-6'>
+            <h3 className='text-lg font-bold'>Section Content</h3>
+            {renderInput('Title', 'title')}
+            {renderInput('Subtitle', 'subtitle', 'text', 2)}
+
+            <div className='space-y-6 mt-8'>
+              <div className='bg-zinc-50 dark:bg-zinc-900 p-6 rounded-lg'>
+                <div className='flex justify-between items-center mb-4 border-b pb-2 dark:border-zinc-700'>
+                  <h3 className='text-lg font-bold'>Inner Circle Icons</h3>
+                  <button
+                    onClick={() => {
+                      const current = settings.showcase_tool?.innerCircle || [];
+                      handleChange('showcase_tool', 'innerCircle', [
+                        ...current,
+                        '',
+                      ]);
+                    }}
+                    className='text-sm bg-primary text-white px-3 py-1 rounded hover:bg-primary/90'
+                  >
+                    + Add Icon
+                  </button>
+                </div>
+                <div className='grid grid-cols-2 gap-4'>
+                  {(settings.showcase_tool?.innerCircle || []).map(
+                    (url: string, index: number) => (
+                      <div key={index} className='relative'>
+                        <label className='block text-sm font-medium mb-1'>
+                          Icon {index + 1}
+                        </label>
+                        <ImageUpload
+                          value={url}
+                          onChange={(newUrl) =>
+                            handleChange(
+                              'showcase_tool',
+                              `innerCircle.${index}`,
+                              newUrl,
+                            )
+                          }
+                        />
+                        <button
+                          onClick={() => {
+                            const current = [
+                              ...(settings.showcase_tool?.innerCircle || []),
+                            ];
+                            current.splice(index, 1);
+                            handleChange(
+                              'showcase_tool',
+                              'innerCircle',
+                              current,
+                            );
+                          }}
+                          className='absolute top-8 right-2 p-1 bg-red-500 text-white rounded-full hover:bg-red-600 z-10'
+                          title='Remove'
+                        >
+                          <svg
+                            xmlns='http://www.w3.org/2000/svg'
+                            width='14'
+                            height='14'
+                            viewBox='0 0 24 24'
+                            fill='none'
+                            stroke='currentColor'
+                            strokeWidth='2'
+                            strokeLinecap='round'
+                            strokeLinejoin='round'
+                          >
+                            <path d='M18 6 6 18' />
+                            <path d='m6 6 12 12' />
+                          </svg>
+                        </button>
+                      </div>
+                    ),
+                  )}
+                </div>
+              </div>
+
+              <div className='bg-zinc-50 dark:bg-zinc-900 p-6 rounded-lg'>
+                <div className='flex justify-between items-center mb-4 border-b pb-2 dark:border-zinc-700'>
+                  <h3 className='text-lg font-bold'>Outer Circle Icons</h3>
+                  <button
+                    onClick={() => {
+                      const current = settings.showcase_tool?.outerCircle || [];
+                      handleChange('showcase_tool', 'outerCircle', [
+                        ...current,
+                        '',
+                      ]);
+                    }}
+                    className='text-sm bg-primary text-white px-3 py-1 rounded hover:bg-primary/90'
+                  >
+                    + Add Icon
+                  </button>
+                </div>
+                <div className='grid grid-cols-2 gap-4'>
+                  {(settings.showcase_tool?.outerCircle || []).map(
+                    (url: string, index: number) => (
+                      <div key={index} className='relative'>
+                        <label className='block text-sm font-medium mb-1'>
+                          Icon {index + 1}
+                        </label>
+                        <ImageUpload
+                          value={url}
+                          onChange={(newUrl) =>
+                            handleChange(
+                              'showcase_tool',
+                              `outerCircle.${index}`,
+                              newUrl,
+                            )
+                          }
+                        />
+                        <button
+                          onClick={() => {
+                            const current = [
+                              ...(settings.showcase_tool?.outerCircle || []),
+                            ];
+                            current.splice(index, 1);
+                            handleChange(
+                              'showcase_tool',
+                              'outerCircle',
+                              current,
+                            );
+                          }}
+                          className='absolute top-8 right-2 p-1 bg-red-500 text-white rounded-full hover:bg-red-600 z-10'
+                          title='Remove'
+                        >
+                          <svg
+                            xmlns='http://www.w3.org/2000/svg'
+                            width='14'
+                            height='14'
+                            viewBox='0 0 24 24'
+                            fill='none'
+                            stroke='currentColor'
+                            strokeWidth='2'
+                            strokeLinecap='round'
+                            strokeLinejoin='round'
+                          >
+                            <path d='M18 6 6 18' />
+                            <path d='m6 6 12 12' />
+                          </svg>
+                        </button>
+                      </div>
+                    ),
+                  )}
+                </div>
+              </div>
+
+              <div className='bg-zinc-50 dark:bg-zinc-900 p-6 rounded-lg'>
+                <div className='flex justify-between items-center mb-4 border-b pb-2 dark:border-zinc-700'>
+                  <div className='flex items-center gap-4'>
+                    <h3 className='text-lg font-bold'>
+                      Extra Outer Circle Icons
+                    </h3>
+                    <div className='flex items-center gap-2'>
+                      <input
+                        type='checkbox'
+                        id='showExtraOuterCircle'
+                        checked={
+                          settings.showcase_tool?.showExtraOuterCircle || false
+                        }
+                        onChange={(e) =>
+                          handleChange(
+                            'showcase_tool',
+                            'showExtraOuterCircle',
+                            e.target.checked,
+                          )
+                        }
+                        className='rounded border-gray-300 text-primary focus:ring-primary'
+                      />
+                      <label
+                        htmlFor='showExtraOuterCircle'
+                        className='text-sm text-gray-600 dark:text-gray-400'
+                      >
+                        Show this circle
+                      </label>
+                    </div>
+                  </div>
+                  <button
+                    onClick={() => {
+                      const current =
+                        settings.showcase_tool?.extraOuterCircle || [];
+                      handleChange('showcase_tool', 'extraOuterCircle', [
+                        ...current,
+                        '',
+                      ]);
+                    }}
+                    className='text-sm bg-primary text-white px-3 py-1 rounded hover:bg-primary/90'
+                  >
+                    + Add Icon
+                  </button>
+                </div>
+
+                {settings.showcase_tool?.showExtraOuterCircle && (
+                  <div className='grid grid-cols-2 gap-4'>
+                    {(settings.showcase_tool?.extraOuterCircle || []).map(
+                      (url: string, index: number) => (
+                        <div key={index} className='relative'>
+                          <label className='block text-sm font-medium mb-1'>
+                            Icon {index + 1}
+                          </label>
+                          <ImageUpload
+                            value={url}
+                            onChange={(newUrl) =>
+                              handleChange(
+                                'showcase_tool',
+                                `extraOuterCircle.${index}`,
+                                newUrl,
+                              )
+                            }
+                          />
+                          <button
+                            onClick={() => {
+                              const current = [
+                                ...(settings.showcase_tool?.extraOuterCircle ||
+                                  []),
+                              ];
+                              current.splice(index, 1);
+                              handleChange(
+                                'showcase_tool',
+                                'extraOuterCircle',
+                                current,
+                              );
+                            }}
+                            className='absolute top-8 right-2 p-1 bg-red-500 text-white rounded-full hover:bg-red-600 z-10'
+                            title='Remove'
+                          >
+                            <svg
+                              xmlns='http://www.w3.org/2000/svg'
+                              width='14'
+                              height='14'
+                              viewBox='0 0 24 24'
+                              fill='none'
+                              stroke='currentColor'
+                              strokeWidth='2'
+                              strokeLinecap='round'
+                              strokeLinejoin='round'
+                            >
+                              <path d='M18 6 6 18' />
+                              <path d='m6 6 12 12' />
+                            </svg>
+                          </button>
+                        </div>
+                      ),
+                    )}
+                  </div>
+                )}
               </div>
             </div>
           </div>

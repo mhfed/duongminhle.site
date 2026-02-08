@@ -17,7 +17,11 @@ export const dynamic = 'force-dynamic'; // Ensure new content is reflected immed
 export default async function Home() {
   let projectsData: InferSelectModel<typeof projects>[] = [];
   let testimonialsData: InferSelectModel<typeof testimonials>[] = [];
-  let globalSettings, heroSettings, aboutTransitionSettings, etcetraSettings;
+  let globalSettings,
+    heroSettings,
+    aboutTransitionSettings,
+    etcetraSettings,
+    showcaseToolSettings;
 
   try {
     projectsData = await db
@@ -33,6 +37,7 @@ export default async function Home() {
     heroSettings = await getSettings('hero');
     aboutTransitionSettings = await getSettings('about_transition');
     etcetraSettings = await getSettings('etcetra');
+    showcaseToolSettings = await getSettings('showcase_tool');
   } catch (error) {
     console.error(
       'Failed to fetch data, falling back to empty or static if desired',
@@ -48,7 +53,7 @@ export default async function Home() {
       <Navbar settings={globalSettings} />
       <Hero settings={heroSettings} />
       {/* Showcase tool */}
-      <ShowcaseTool />
+      <ShowcaseTool settings={showcaseToolSettings} />
       <Projects projects={projectsData} />
       <AboutTransition settings={aboutTransitionSettings} />
       <Etcetra settings={etcetraSettings} />

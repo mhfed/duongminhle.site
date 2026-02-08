@@ -2,7 +2,12 @@
 
 import { OrbitingCircles } from '@/components/ui/orbiting-circles';
 
-export default function ShowcaseTool() {
+import Image from 'next/image';
+
+export default function ShowcaseTool({ settings }: { settings?: any }) {
+  const innerCircle = settings?.innerCircle || [];
+  const outerCircle = settings?.outerCircle || [];
+
   return (
     <section className='relative flex w-full flex-col items-center justify-center overflow-hidden md:h-screen md:flex-row'>
       <span className='pointer-events-none absolute left-0 top-0 -translate-x-1/4 -translate-y-1/4 whitespace-pre-wrap bg-linear-to-b from-black to-gray-300 bg-clip-text text-center text-[200px] font-semibold leading-none text-transparent opacity-10 dark:from-white dark:to-black'>
@@ -12,28 +17,74 @@ export default function ShowcaseTool() {
       <div className='container relative z-10 grid h-full w-full grid-cols-1 gap-8 px-4 md:grid-cols-2 md:px-6'>
         <div className='flex flex-col items-center justify-center space-y-4 text-center md:items-start md:text-left'>
           <h2 className='text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl dark:text-white'>
-            The Perfect Stack
+            {settings?.title || 'The Perfect Stack'}
           </h2>
           <p className='max-w-[600px] text-lg text-gray-500 md:text-xl dark:text-gray-400'>
-            Crafting seamless digital experiences with modern technologies. My
-            toolkit is curated for speed, scalability, and performance.
+            {settings?.subtitle ||
+              'Crafting seamless digital experiences with modern technologies. My toolkit is curated for speed, scalability, and performance.'}
           </p>
         </div>
 
         <div className='relative flex h-full w-full items-center justify-center'>
           <OrbitingCircles iconSize={40}>
-            <Icons.whatsapp />
-            <Icons.notion />
-            <Icons.openai />
-            <Icons.googleDrive />
-            <Icons.whatsapp />
+            {innerCircle.length > 0 ? (
+              innerCircle.map((src: string, i: number) => (
+                <div key={i} className='relative size-full p-2'>
+                  <Image
+                    src={src}
+                    alt={`Tool ${i}`}
+                    fill
+                    className='object-contain'
+                  />
+                </div>
+              ))
+            ) : (
+              <>
+                <Icons.whatsapp />
+                <Icons.notion />
+                <Icons.openai />
+                <Icons.googleDrive />
+                <Icons.whatsapp />
+              </>
+            )}
           </OrbitingCircles>
           <OrbitingCircles iconSize={30} radius={100} reverse speed={2}>
-            <Icons.whatsapp />
-            <Icons.notion />
-            <Icons.openai />
-            <Icons.googleDrive />
+            {outerCircle.length > 0 ? (
+              outerCircle.map((src: string, i: number) => (
+                <div key={i} className='relative size-full p-1'>
+                  <Image
+                    src={src}
+                    alt={`Tool ${i}`}
+                    fill
+                    className='object-contain'
+                  />
+                </div>
+              ))
+            ) : (
+              <>
+                <Icons.whatsapp />
+                <Icons.notion />
+                <Icons.openai />
+                <Icons.googleDrive />
+              </>
+            )}
           </OrbitingCircles>
+          {settings?.showExtraOuterCircle && (
+            <OrbitingCircles iconSize={50} radius={220} speed={3}>
+              {(settings.extraOuterCircle || []).map(
+                (src: string, i: number) => (
+                  <div key={i} className='relative size-full p-1'>
+                    <Image
+                      src={src}
+                      alt={`Tool ${i}`}
+                      fill
+                      className='object-contain'
+                    />
+                  </div>
+                ),
+              )}
+            </OrbitingCircles>
+          )}
         </div>
       </div>
     </section>
