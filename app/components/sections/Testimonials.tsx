@@ -2,6 +2,7 @@
 
 import Image from 'next/image';
 import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 interface Testimonial {
   id: number;
@@ -17,22 +18,27 @@ export default function Testimonials({
   testimonials: Testimonial[];
 }) {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [direction, setDirection] = useState(0);
 
   if (!testimonials || testimonials.length === 0) {
     return null;
   }
 
   const handleNext = () => {
+    setDirection(1);
     setCurrentIndex((prev) =>
       prev === testimonials.length - 1 ? 0 : prev + 1,
     );
   };
 
   const handlePrev = () => {
+    setDirection(-1);
     setCurrentIndex((prev) =>
       prev === 0 ? testimonials.length - 1 : prev - 1,
     );
   };
+
+  const currentTestimonial = testimonials[currentIndex];
 
   return (
     <section className='py-24 border-t border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark'>
@@ -53,52 +59,67 @@ export default function Testimonials({
           </h2>
         </div>
 
-        <div className='relative'>
-          {testimonials.map((testimonial, index) => (
-            <div
-              key={testimonial.id}
-              className={`max-w-4xl transition-all duration-500 ease-in-out ${index === currentIndex ? 'block opacity-100 translate-x-0' : 'hidden opacity-0 translate-x-4'}`}
-            >
-              <p className='text-xl md:text-3xl font-light leading-relaxed mb-12 text-gray-700 dark:text-gray-200 min-h-[120px]'>
-                {testimonial.content}
-              </p>
-              <div className='flex items-center justify-between border-t border-border-light dark:border-border-dark pt-8'>
-                <div className='flex items-center space-x-4'>
+        <div className='relative max-w-4xl'>
+          <div className='min-h-[160px] mb-12 relative'>
+            <AnimatePresence mode='wait' custom={direction}>
+              <motion.p
+                key={currentTestimonial.id}
+                initial={{ opacity: 0, x: direction > 0 ? 20 : -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: direction > 0 ? -20 : 20 }}
+                transition={{ duration: 0.3, ease: 'easeInOut' }}
+                className='text-xl md:text-3xl font-light leading-relaxed text-gray-700 dark:text-gray-200 absolute top-0 left-0 w-full'
+              >
+                {currentTestimonial.content}
+              </motion.p>
+            </AnimatePresence>
+          </div>
+
+          <div className='flex items-center justify-between border-t border-border-light dark:border-border-dark pt-8'>
+            <div className='flex items-center space-x-4 min-w-[240px] min-h-[56px]'>
+              <AnimatePresence mode='wait' custom={direction}>
+                <motion.div
+                  key={currentTestimonial.id}
+                  initial={{ opacity: 0, x: direction > 0 ? 20 : -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: direction > 0 ? -20 : 20 }}
+                  transition={{ duration: 0.3, ease: 'easeInOut' }}
+                  className='flex items-center space-x-4 w-full'
+                >
                   <Image
-                    alt={testimonial.authorName}
+                    alt={currentTestimonial.authorName}
                     className='rounded-full object-cover grayscale hover:grayscale-0 transition-all duration-300'
-                    src={testimonial.authorImage}
+                    src={currentTestimonial.authorImage}
                     width={56}
                     height={56}
                   />
                   <div>
                     <h4 className='font-bold text-lg text-gray-900 dark:text-white'>
-                      {testimonial.authorName}
+                      {currentTestimonial.authorName}
                     </h4>
                     <p className='text-xs uppercase tracking-wider text-gray-500'>
-                      {testimonial.authorRole}
+                      {currentTestimonial.authorRole}
                     </p>
                   </div>
-                </div>
-                <div className='flex space-x-2'>
-                  <button
-                    onClick={handlePrev}
-                    className='w-10 h-10 rounded-full border border-gray-600 flex items-center justify-center hover:bg-white hover:text-black transition-colors transform hover:scale-110'
-                  >
-                    <span className='material-icons text-sm'>chevron_left</span>
-                  </button>
-                  <button
-                    onClick={handleNext}
-                    className='w-10 h-10 rounded-full border border-gray-600 flex items-center justify-center hover:bg-white hover:text-black transition-colors transform hover:scale-110'
-                  >
-                    <span className='material-icons text-sm'>
-                      chevron_right
-                    </span>
-                  </button>
-                </div>
-              </div>
+                </motion.div>
+              </AnimatePresence>
             </div>
-          ))}
+
+            <div className='flex space-x-2 z-10'>
+              <button
+                onClick={handlePrev}
+                className='w-10 h-10 rounded-full border border-gray-600 flex items-center justify-center hover:bg-white hover:text-black transition-colors transform hover:scale-110'
+              >
+                <span className='material-icons text-sm'>chevron_left</span>
+              </button>
+              <button
+                onClick={handleNext}
+                className='w-10 h-10 rounded-full border border-gray-600 flex items-center justify-center hover:bg-white hover:text-black transition-colors transform hover:scale-110'
+              >
+                <span className='material-icons text-sm'>chevron_right</span>
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </section>
