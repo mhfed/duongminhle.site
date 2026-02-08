@@ -10,6 +10,7 @@ import Etcetra from './components/sections/Etcetra';
 import Testimonials from './components/sections/Testimonials';
 import AboutTransition from './components/sections/AboutTransition';
 import HomeAnimations from './components/HomeAnimations';
+import ShowcaseTool from './components/sections/ShowcaseTool';
 
 export const dynamic = 'force-dynamic'; // Ensure new content is reflected immediately
 
@@ -46,6 +47,8 @@ export default async function Home() {
       <HomeAnimations />
       <Navbar settings={globalSettings} />
       <Hero settings={heroSettings} />
+      {/* Showcase tool */}
+      <ShowcaseTool />
       <Projects projects={projectsData} />
       <AboutTransition settings={aboutTransitionSettings} />
       <Etcetra settings={etcetraSettings} />
