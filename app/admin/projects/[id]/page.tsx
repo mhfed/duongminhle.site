@@ -111,6 +111,18 @@ export default async function EditProjectPage({
 
         <div>
           <label className='block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2'>
+            Link (Optional)
+          </label>
+          <input
+            name='link'
+            defaultValue={project.link || ''}
+            className='w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-700 bg-transparent focus:ring-2 focus:ring-primary focus:outline-none'
+            placeholder='https://behance.net/...'
+          />
+        </div>
+
+        <div>
+          <label className='block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2'>
             Order
           </label>
           <input

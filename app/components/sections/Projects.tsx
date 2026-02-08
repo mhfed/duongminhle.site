@@ -6,7 +6,8 @@ interface Project {
   role: string;
   duration: string;
   image: string;
-  alt: string; // Ensure this exists in your DB schema passed down
+  alt: string;
+  link?: string | null;
   roleColor: string;
 }
 
@@ -48,11 +49,8 @@ export default function Projects({ projects }: { projects: Project[] }) {
         </div>
       </div>
 
-      {projects.map((project) => (
-        <div
-          key={project.id}
-          className='border-t border-border-light dark:border-border-dark group reveal-on-scroll'
-        >
+      {projects.map((project) => {
+        const ProjectContent = (
           <div className='grid grid-cols-1 lg:grid-cols-12 min-h-[500px]'>
             {/* Left Content */}
             <div className='lg:col-span-4 p-8 lg:p-12 flex flex-col justify-between border-r border-border-light dark:border-border-dark transition-colors duration-300 group-hover:bg-surface-dark/20'>
@@ -101,8 +99,28 @@ export default function Projects({ projects }: { projects: Project[] }) {
               </div>
             </div>
           </div>
-        </div>
-      ))}
+        );
+
+        return (
+          <div
+            key={project.id}
+            className='border-t border-border-light dark:border-border-dark group reveal-on-scroll'
+          >
+            {project.link ? (
+              <a
+                href={project.link}
+                target='_blank'
+                rel='noopener noreferrer'
+                className='block'
+              >
+                {ProjectContent}
+              </a>
+            ) : (
+              ProjectContent
+            )}
+          </div>
+        );
+      })}
     </section>
   );
 }

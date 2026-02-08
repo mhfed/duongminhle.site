@@ -15,6 +15,7 @@ export async function createProject(formData: FormData) {
   const image = formData.get('image') as string;
   const alt = formData.get('alt') as string;
   const roleColor = formData.get('roleColor') as string;
+  const link = formData.get('link') as string;
   const order = parseInt(formData.get('order') as string) || 0;
 
   await db.insert(projects).values({
@@ -24,6 +25,7 @@ export async function createProject(formData: FormData) {
     image,
     alt,
     roleColor,
+    link,
     order,
   });
 
@@ -39,6 +41,7 @@ export async function updateProject(id: number, formData: FormData) {
   const image = formData.get('image') as string;
   const alt = formData.get('alt') as string;
   const roleColor = formData.get('roleColor') as string;
+  const link = formData.get('link') as string;
   const order = parseInt(formData.get('order') as string) || 0;
 
   await db
@@ -50,6 +53,7 @@ export async function updateProject(id: number, formData: FormData) {
       image,
       alt,
       roleColor,
+      link,
       order,
     })
     .where(eq(projects.id, id));

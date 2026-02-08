@@ -7,6 +7,7 @@ export const projects = pgTable('projects', {
   duration: text('duration').notNull(),
   image: text('image').notNull(),
   alt: text('alt').notNull(),
+  link: text('link'), // Optional link to project
   roleColor: text('role_color').default('text-gray-500').notNull(), // 'text-gray-500' or 'text-primary'
   order: integer('order').default(0).notNull(),
   createdAt: timestamp('created_at').defaultNow().notNull(),
