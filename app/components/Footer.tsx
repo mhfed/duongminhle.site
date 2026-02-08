@@ -1,4 +1,4 @@
-import { defaultSettings } from '@/app/lib/settings';
+import { defaultSettings } from '@/app/lib/settings-constants';
 import Link from 'next/link';
 
 export default function Footer({
@@ -21,9 +21,9 @@ export default function Footer({
   };
 
   return (
-    <footer className='bg-surface-dark dark:bg-black text-white pt-20 pb-8 border-t border-border-dark'>
+    <footer className='bg-surface-dark dark:bg-black text-white pt-12 md:pt-20 pb-8 border-t border-border-dark'>
       <div className='container mx-auto px-6'>
-        <div className='grid grid-cols-1 md:grid-cols-3 gap-12 mb-20'>
+        <div className='grid grid-cols-1 md:grid-cols-3 gap-12 mb-12 md:mb-20'>
           <div>
             <h5 className='text-xs font-bold text-gray-500 uppercase tracking-widest mb-6'>
               Get In Touch

@@ -1,4 +1,4 @@
-import { defaultSettings } from '@/app/lib/settings';
+import { defaultSettings } from '@/app/lib/settings-constants';
 import Link from 'next/link';
 
 export default function AboutTransition({
@@ -11,7 +11,7 @@ export default function AboutTransition({
   const displayButtonText = buttonText || 'Check out ETCETRA →';
 
   return (
-    <section className='py-24 bg-surface-dark dark:bg-[#080808] text-center relative overflow-hidden reveal-on-scroll'>
+    <section className='py-24 px-6 bg-surface-dark dark:bg-[#080808] text-center relative overflow-hidden reveal-on-scroll'>
       <span className='hidden md:block absolute left-10 top-1/2 transform -translate-y-1/2 text-[20rem] text-gray-800 dark:text-[#141414] font-display leading-none z-0 opacity-50'>
         “
       </span>

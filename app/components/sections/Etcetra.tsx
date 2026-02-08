@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { defaultSettings } from '@/app/lib/settings';
+import { defaultSettings } from '@/app/lib/settings-constants';
 
 export default function Etcetra({
   settings = defaultSettings.etcetra,
@@ -39,12 +39,12 @@ export default function Etcetra({
 
   return (
     <section
-      className='relative py-32 overflow-hidden bg-background-light dark:bg-background-dark scroll-mt-20'
+      className='relative py-20 md:py-32 overflow-hidden bg-background-light dark:bg-background-dark scroll-mt-20'
       id='etcetra'
     >
       <div className='absolute inset-0 bg-grid-light dark:bg-grid-dark bg-grid-sparse opacity-10 dark:opacity-05 pointer-events-none'></div>
-      <div className='container mx-auto px-6 relative z-10 min-h-[600px] flex items-center justify-center reveal-on-scroll'>
-        <h2 className='text-5xl md:text-7xl font-display font-bold text-center leading-tight bg-background-light/50 dark:bg-background-dark/50 p-4 relative z-20 backdrop-blur-sm rounded-xl'>
+      <div className='container mx-auto px-6 relative z-10 min-h-auto md:min-h-[600px] flex flex-col md:block items-center justify-center space-y-12 md:space-y-0 reveal-on-scroll'>
+        <h2 className='text-4xl md:text-7xl font-display font-bold text-center leading-tight bg-background-light/50 dark:bg-background-dark/50 p-4 relative z-20 backdrop-blur-sm rounded-xl md:absolute md:top-1/2 md:left-1/2 md:transform md:-translate-x-1/2 md:-translate-y-1/2'>
           {titleLine1}
           <br />
           <span className='text-gray-500 dark:text-gray-400'>
@@ -52,7 +52,7 @@ export default function Etcetra({
           </span>
         </h2>
         <div
-          className='absolute top-0 left-4 md:top-10 md:left-20 max-w-[200px] p-4 border border-dashed border-gray-400 bg-background-light dark:bg-black transform -rotate-2 hover:rotate-0 hover:scale-110 transition-all duration-300 cursor-help shadow-lg reveal-on-scroll'
+          className='relative md:absolute md:top-10 md:left-20 max-w-[200px] p-4 border border-dashed border-gray-400 bg-background-light dark:bg-black transform rotate-2 md:-rotate-2 hover:rotate-0 hover:scale-110 transition-all duration-300 cursor-help shadow-lg w-full'
           style={{ transitionDelay: '100ms' }}
         >
           <p className='text-sm font-mono text-gray-600 dark:text-gray-300'>
@@ -60,7 +60,7 @@ export default function Etcetra({
           </p>
         </div>
         <div
-          className='absolute bottom-10 left-4 md:bottom-20 md:left-32 max-w-[180px] p-4 bg-background-light dark:bg-black border border-gray-700 hover:border-primary transition-colors duration-300 shadow-xl reveal-on-scroll'
+          className='relative md:absolute md:bottom-20 md:left-32 max-w-[180px] p-4 bg-background-light dark:bg-black border border-gray-700 hover:border-primary transition-colors duration-300 shadow-xl w-full'
           style={{ transitionDelay: '150ms' }}
         >
           <p className='text-sm font-medium text-gray-600 dark:text-gray-300'>
@@ -68,7 +68,7 @@ export default function Etcetra({
           </p>
         </div>
         <div
-          className='absolute bottom-0 md:bottom-10 left-1/2 transform -translate-x-1/2 translate-y-1/2 md:translate-y-0 reveal-on-scroll'
+          className='relative md:absolute md:bottom-0 md:left-1/2 md:transform md:-translate-x-1/2'
           style={{ transitionDelay: '200ms' }}
         >
           <div className='w-32 h-32 rounded-full bg-yellow-900/20 flex items-center justify-center p-2 animate-spin-slow hover:animate-none'>
@@ -82,7 +82,7 @@ export default function Etcetra({
           </div>
         </div>
         <div
-          className='absolute top-20 right-4 md:right-20 flex -space-x-4 reveal-on-scroll'
+          className='relative md:absolute md:top-20 md:right-20 flex -space-x-4 justify-center md:justify-start'
           style={{ transitionDelay: '250ms' }}
         >
           <Image
@@ -106,12 +106,12 @@ export default function Etcetra({
             width={64}
             height={64}
           />
-          <div className='absolute top-16 right-0 bg-background-light dark:bg-black p-2 border border-gray-700 text-xs w-32 shadow-lg rotate-3 hover:rotate-0 transition-transform'>
+          <div className='relative md:absolute top-auto md:top-16 left-auto md:right-0 bg-background-light dark:bg-black p-2 border border-gray-700 text-xs w-32 shadow-lg -rotate-3 md:rotate-3 hover:rotate-0 transition-transform ml-4 md:ml-0 mt-4 md:mt-0'>
             {item4}
           </div>
         </div>
         <div
-          className='absolute bottom-20 right-10 md:right-32 max-w-[150px] text-right group cursor-pointer reveal-on-scroll'
+          className='relative md:absolute md:bottom-20 md:right-32 max-w-[150px] text-center md:text-right group cursor-pointer'
           style={{ transitionDelay: '300ms' }}
         >
           <span className='text-4xl inline-block group-hover:animate-bounce'>

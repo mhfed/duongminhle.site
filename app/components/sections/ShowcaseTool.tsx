@@ -9,13 +9,13 @@ export default function ShowcaseTool({ settings }: { settings?: any }) {
   const outerCircle = settings?.outerCircle || [];
 
   return (
-    <section className='relative flex w-full flex-col items-center justify-center overflow-hidden md:h-screen md:flex-row'>
-      <span className='pointer-events-none absolute left-0 top-0 -translate-x-1/4 -translate-y-1/4 whitespace-pre-wrap bg-linear-to-b from-black to-gray-300 bg-clip-text text-center text-[200px] font-semibold leading-none text-transparent opacity-10 dark:from-white dark:to-black'>
+    <section className='relative flex w-full flex-col items-center justify-center overflow-hidden min-h-screen md:h-screen md:flex-row py-20 md:py-0'>
+      <span className='pointer-events-none absolute left-0 top-0 -translate-x-1/4 -translate-y-1/4 whitespace-pre-wrap bg-linear-to-b from-black to-gray-300 bg-clip-text text-center text-[100px] md:text-[200px] font-semibold leading-none text-transparent opacity-10 dark:from-white dark:to-black'>
         Stack
       </span>
 
       <div className='container relative z-10 grid h-full w-full grid-cols-1 gap-8 px-4 md:grid-cols-2 md:px-6'>
-        <div className='flex flex-col items-center justify-center space-y-4 text-center md:items-start md:text-left'>
+        <div className='flex flex-col items-center justify-center space-y-4 text-center md:items-start md:text-left z-20'>
           <h2 className='text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl dark:text-white'>
             {settings?.title || 'The Perfect Stack'}
           </h2>
@@ -25,7 +25,7 @@ export default function ShowcaseTool({ settings }: { settings?: any }) {
           </p>
         </div>
 
-        <div className='relative flex h-full w-full items-center justify-center'>
+        <div className='relative flex h-[400px] md:h-full w-full items-center justify-center scale-75 md:scale-100 transform-gpu'>
           <OrbitingCircles iconSize={40}>
             {innerCircle.length > 0 ? (
               innerCircle.map((src: string, i: number) => (

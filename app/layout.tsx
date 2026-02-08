@@ -38,6 +38,7 @@ export default function RootLayout({
           rel='stylesheet'
         />
       </head>
+
       <body
         className={`${inter.variable} ${oswald.variable} ${sacramento.variable} antialiased bg-background-light dark:bg-background-dark text-gray-900 dark:text-white transition-colors duration-300 font-body`}
       >

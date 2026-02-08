@@ -24,7 +24,7 @@ export default function Projects({ projects }: { projects: Project[] }) {
       <div className='container mx-auto px-6 py-16 flex items-end reveal-on-scroll'>
         <div className='flex items-start'>
           <svg
-            className='text-white fill-current w-16 h-16 md:w-24 md:h-24 mr-4'
+            className='text-white fill-current w-12 h-12 md:w-24 md:h-24 mr-4'
             viewBox='0 0 100 100'
           >
             <rect
@@ -43,7 +43,7 @@ export default function Projects({ projects }: { projects: Project[] }) {
             ></rect>
             <path className='text-white' d='M0 50 L35 50 L35 85 L0 50 Z'></path>
           </svg>
-          <h2 className='text-6xl md:text-8xl font-display font-bold uppercase tracking-tighter self-center ml-4'>
+          <h2 className='text-5xl md:text-8xl font-display font-bold uppercase tracking-tighter self-center ml-4'>
             Projects
           </h2>
         </div>
@@ -51,20 +51,20 @@ export default function Projects({ projects }: { projects: Project[] }) {
 
       {projects.map((project) => {
         const ProjectContent = (
-          <div className='grid grid-cols-1 lg:grid-cols-12 min-h-[500px]'>
+          <div className='grid grid-cols-1 lg:grid-cols-12 min-h-auto lg:min-h-[500px]'>
             {/* Left Content */}
-            <div className='lg:col-span-4 p-8 lg:p-12 flex flex-col justify-between border-r border-border-light dark:border-border-dark transition-colors duration-300 group-hover:bg-surface-dark/20'>
+            <div className='lg:col-span-4 p-6 md:p-8 lg:p-12 flex flex-col justify-between border-b lg:border-b-0 lg:border-r border-border-light dark:border-border-dark transition-colors duration-300 group-hover:bg-surface-dark/20 order-2 lg:order-1'>
               <div>
                 <span
                   className={`text-xs font-bold tracking-widest uppercase mb-2 block ${project.roleColor}`}
                 >
                   {project.role}
                 </span>
-                <h3 className='text-4xl font-display font-bold text-gray-900 dark:text-white mb-4 group-hover:text-primary transition-colors'>
+                <h3 className='text-3xl md:text-4xl font-display font-bold text-gray-900 dark:text-white mb-4 group-hover:text-primary transition-colors'>
                   {project.title}
                 </h3>
               </div>
-              <div className='flex items-end justify-between mt-12'>
+              <div className='flex items-end justify-between mt-8 lg:mt-12'>
                 <div>
                   <span className='text-xs uppercase text-gray-500 block'>
                     Duration
@@ -88,7 +88,7 @@ export default function Projects({ projects }: { projects: Project[] }) {
             </div>
 
             {/* Right Image */}
-            <div className='lg:col-span-8 bg-surface-dark relative overflow-hidden p-6'>
+            <div className='lg:col-span-8 bg-surface-dark relative overflow-hidden p-0 lg:p-6 order-1 lg:order-2 h-[300px] lg:h-auto'>
               <div className='project-image-container relative w-full h-full overflow-hidden'>
                 <Image
                   alt={project.alt || 'Project Image'}

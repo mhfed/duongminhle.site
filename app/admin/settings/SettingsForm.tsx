@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { saveSettings } from '@/app/actions/settings';
-import { SettingsKey } from '@/app/lib/settings';
+import { SettingsKey } from '@/app/lib/settings-constants';
 import ImageUpload from '@/app/components/admin/ImageUpload';
 
 export default function SettingsForm({

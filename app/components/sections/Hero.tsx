@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { defaultSettings } from '@/app/lib/settings';
+import { defaultSettings } from '@/app/lib/settings-constants';
 
 export default function Hero({
   settings = defaultSettings.hero,
@@ -33,20 +33,20 @@ export default function Hero({
 
   return (
     <header
-      className='relative h-screen flex flex-col pt-24 border-b border-border-light dark:border-border-dark overflow-hidden'
+      className='relative min-h-screen flex flex-col pt-24 border-b border-border-light dark:border-border-dark overflow-hidden'
       id='about'
     >
       {/* Background Grid */}
       <div className='absolute inset-0 opacity-[0.05] dark:opacity-[0.1] pointer-events-none z-0'></div>
 
       {/* Main Grid Container */}
-      <div className='px-6 h-full relative z-10 pb-12 box-border'>
+      <div className='px-6 h-full relative z-10 pb-12 box-border flex-grow'>
         <div className='grid grid-cols-1 lg:grid-cols-2 lg:grid-rows-2 h-full relative z-10'>
           {/* 1. Top Left: Name */}
-          <div className='border-b lg:border-r border-border-light dark:border-gray-800 p-8 md:p-12 relative flex flex-col justify-center'>
+          <div className='border-b lg:border-r border-border-light dark:border-gray-800 p-6 md:p-12 relative flex flex-col justify-center min-h-[30vh] lg:min-h-0'>
             <div className='flex items-start justify-between'>
               <div className='reveal-on-scroll hero-title'>
-                <h1 className='text-6xl md:text-8xl font-display font-bold leading-none uppercase tracking-tighter'>
+                <h1 className='text-5xl md:text-8xl font-display font-bold leading-none uppercase tracking-tighter'>
                   {firstName}
                   <br />
                   {lastName}
@@ -66,16 +66,16 @@ export default function Hero({
           </div>
 
           {/* 2. Top Right: Statement */}
-          <div className='border-b border-border-light dark:border-gray-800 p-8 md:p-12 flex flex-col justify-end relative'>
+          <div className='border-b border-border-light dark:border-gray-800 p-6 md:p-12 flex flex-col justify-end relative min-h-[30vh] lg:min-h-0'>
             <div className='absolute inset-0 bg-grid-light dark:bg-grid-dark bg-grid opacity-[0.05] dark:opacity-[0.05] pointer-events-none z-0'></div>
             <div className='absolute bottom-0 left-0 w-4 h-4 border-b border-l border-white/20 hidden lg:block z-10'></div>
             <div className='reveal-on-scroll relative z-10'>
-              <h2 className='text-4xl md:text-5xl font-display font-bold leading-tight'>
+              <h2 className='text-3xl md:text-5xl font-display font-bold leading-tight'>
                 {subLine1}
                 <br />
                 {subLine2}
                 <br />
-                <span className='font-script text-6xl text-gray-500 font-normal lowercase ml-2 border-b-2 border-primary/50 inline-block pb-2'>
+                <span className='font-script text-5xl md:text-6xl text-gray-500 font-normal lowercase ml-2 border-b-2 border-primary/50 inline-block pb-2'>
                   {highlight}
                 </span>
               </h2>
@@ -83,9 +83,9 @@ export default function Hero({
           </div>
 
           {/* 3. Bottom Left: Bio */}
-          <div className='lg:border-r border-border-light dark:border-gray-800 p-8 md:p-12 flex flex-col justify-between relative'>
+          <div className='lg:border-r border-border-light dark:border-gray-800 p-6 md:p-12 flex flex-col justify-between relative min-h-[30vh] lg:min-h-0'>
             <div className='absolute inset-0 bg-grid-light dark:bg-grid-dark bg-grid opacity-[0.05] dark:opacity-[0.05] pointer-events-none z-0'></div>
-            <div className='max-w-md text-gray-600 dark:text-gray-400 text-lg leading-relaxed reveal-on-scroll relative z-10 whitespace-pre-wrap'>
+            <div className='max-w-md text-gray-600 dark:text-gray-400 text-base md:text-lg leading-relaxed reveal-on-scroll relative z-10 whitespace-pre-wrap'>
               {bioText}
             </div>
             <div className='mt-8 flex items-center space-x-4 reveal-on-scroll relative z-10'>
@@ -100,7 +100,7 @@ export default function Hero({
           </div>
 
           {/* 4. Bottom Right: Image Grid */}
-          <div className='p-0 relative overflow-hidden group h-full'>
+          <div className='p-0 relative overflow-hidden group h-full min-h-[300px]'>
             <div className='grid grid-cols-2 h-full p-4'>
               <div className='relative border-r border-b border-gray-800/50 grayscale hover:grayscale-0 transition-all duration-500'>
                 <Image
