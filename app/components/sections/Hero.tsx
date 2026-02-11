@@ -85,6 +85,7 @@ export default function Hero({
           {/* 3. Bottom Left: Bio */}
           <div className='lg:border-r border-border-light dark:border-gray-800 p-6 md:p-12 flex flex-col justify-between relative min-h-[30vh] lg:min-h-0'>
             <div className='absolute inset-0 bg-grid-light dark:bg-grid-dark bg-grid opacity-[0.05] dark:opacity-[0.05] pointer-events-none z-0'></div>
+            <div className='absolute top-0 right-0 w-4 h-4 border-t border-r border-white/20 hidden lg:block z-10'></div>
             <div className='max-w-md text-gray-600 dark:text-gray-400 text-base md:text-lg leading-relaxed reveal-on-scroll relative z-10 whitespace-pre-wrap'>
               {bioText}
             </div>
