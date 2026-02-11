@@ -59,7 +59,7 @@ export default function Testimonials({
           </h2>
         </div>
 
-        <div className='relative max-w-4xl'>
+        <div className='relative w-full'>
           <div className='min-h-[300px] md:min-h-[160px] mb-12 relative'>
             <AnimatePresence mode='wait' custom={direction}>
               <motion.p
