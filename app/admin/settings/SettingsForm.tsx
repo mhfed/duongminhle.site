@@ -4,6 +4,23 @@ import { useState } from 'react';
 import { saveSettings } from '@/app/actions/settings';
 import { SettingsKey } from '@/app/lib/settings-constants';
 import ImageUpload from '@/app/components/admin/ImageUpload';
+import {
+  DndContext,
+  closestCenter,
+  KeyboardSensor,
+  PointerSensor,
+  useSensor,
+  useSensors,
+  DragEndEvent,
+} from '@dnd-kit/core';
+import {
+  arrayMove,
+  SortableContext,
+  sortableKeyboardCoordinates,
+  useSortable,
+  verticalListSortingStrategy,
+} from '@dnd-kit/sortable';
+import { CSS } from '@dnd-kit/utilities';
 
 export default function SettingsForm({
   initialSettings,
@@ -396,7 +413,7 @@ export default function SettingsForm({
                     const current = settings.about?.experience || [];
                     handleChange('about', 'experience', [
                       ...current,
-                      { title: '', content: '' },
+                      { id: `exp-${Date.now()}`, title: '', content: '' },
                     ]);
                   }}
                   className='text-sm bg-primary text-white px-3 py-1 rounded hover:bg-primary/90'
@@ -404,84 +421,20 @@ export default function SettingsForm({
                   + Add Item
                 </button>
               </div>
-              <div className='space-y-6'>
-                {(settings.about?.experience || []).map(
-                  (item: any, index: number) => (
-                    <div
-                      key={index}
-                      className='p-4 border rounded bg-white dark:bg-black dark:border-zinc-800 relative'
-                    >
-                      <div className='flex justify-between items-center mb-2'>
-                        <h4 className='font-medium text-primary'>
-                          Item {index + 1}
-                        </h4>
-                        <button
-                          onClick={() => {
-                            const current = [
-                              ...(settings.about?.experience || []),
-                            ];
-                            current.splice(index, 1);
-                            handleChange('about', 'experience', current);
-                          }}
-                          className='p-1 text-gray-400 hover:text-red-500 transition-colors'
-                          title='Remove'
-                        >
-                          <svg
-                            xmlns='http://www.w3.org/2000/svg'
-                            width='16'
-                            height='16'
-                            viewBox='0 0 24 24'
-                            fill='none'
-                            stroke='currentColor'
-                            strokeWidth='2'
-                            strokeLinecap='round'
-                            strokeLinejoin='round'
-                          >
-                            <path d='M18 6 6 18' />
-                            <path d='m6 6 12 12' />
-                          </svg>
-                        </button>
-                      </div>
-                      <div className='space-y-3'>
-                        <div className='mb-4'>
-                          <label className='block text-sm font-medium mb-1'>
-                            Title
-                          </label>
-                          <input
-                            type='text'
-                            className='w-full p-2 border rounded dark:bg-zinc-800 dark:border-gray-700'
-                            value={item.title}
-                            onChange={(e) =>
-                              handleChange(
-                                'about',
-                                `experience.${index}.title`,
-                                e.target.value,
-                              )
-                            }
-                          />
-                        </div>
-                        <div className='mb-4'>
-                          <label className='block text-sm font-medium mb-1'>
-                            Content
-                          </label>
-                          <textarea
-                            className='w-full p-2 border rounded dark:bg-zinc-800 dark:border-gray-700'
-                            rows={3}
-                            value={item.content}
-                            onChange={(e) =>
-                              handleChange(
-                                'about',
-                                `experience.${index}.content`,
-                                e.target.value,
-                              )
-                            }
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  ),
-                )}
-              </div>
+              <ExperienceList
+                items={settings.about?.experience || []}
+                onReorder={(newItems) =>
+                  handleChange('about', 'experience', newItems)
+                }
+                onUpdate={(index, field, value) =>
+                  handleChange('about', `experience.${index}.${field}`, value)
+                }
+                onDelete={(index) => {
+                  const current = [...(settings.about?.experience || [])];
+                  current.splice(index, 1);
+                  handleChange('about', 'experience', current);
+                }}
+              />
             </div>
 
             <div className='bg-zinc-50 dark:bg-zinc-900 p-6 rounded-lg'>
@@ -786,6 +739,168 @@ export default function SettingsForm({
           >
             {status === 'saving' ? 'Saving...' : 'Save Changes'}
           </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// Sortable Experience List Component
+function ExperienceList({
+  items,
+  onReorder,
+  onUpdate,
+  onDelete,
+}: {
+  items: any[];
+  onReorder: (items: any[]) => void;
+  onUpdate: (index: number, field: string, value: string) => void;
+  onDelete: (index: number) => void;
+}) {
+  const sensors = useSensors(
+    useSensor(PointerSensor),
+    useSensor(KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates,
+    }),
+  );
+
+  const handleDragEnd = (event: DragEndEvent) => {
+    const { active, over } = event;
+
+    if (over && active.id !== over.id) {
+      const oldIndex = items.findIndex((item) => item.id === active.id);
+      const newIndex = items.findIndex((item) => item.id === over.id);
+      onReorder(arrayMove(items, oldIndex, newIndex));
+    }
+  };
+
+  // Ensure all items have IDs
+  const itemsWithIds = items.map((item, index) => ({
+    ...item,
+    id: item.id || `exp-${index}`,
+  }));
+
+  return (
+    <DndContext
+      sensors={sensors}
+      collisionDetection={closestCenter}
+      onDragEnd={handleDragEnd}
+    >
+      <SortableContext
+        items={itemsWithIds.map((item) => item.id)}
+        strategy={verticalListSortingStrategy}
+      >
+        <div className='space-y-6'>
+          {itemsWithIds.map((item, index) => (
+            <SortableExperienceItem
+              key={item.id}
+              id={item.id}
+              item={item}
+              index={index}
+              onUpdate={onUpdate}
+              onDelete={onDelete}
+            />
+          ))}
+        </div>
+      </SortableContext>
+    </DndContext>
+  );
+}
+
+// Sortable Experience Item Component
+function SortableExperienceItem({
+  id,
+  item,
+  index,
+  onUpdate,
+  onDelete,
+}: {
+  id: string;
+  item: any;
+  index: number;
+  onUpdate: (index: number, field: string, value: string) => void;
+  onDelete: (index: number) => void;
+}) {
+  const { attributes, listeners, setNodeRef, transform, transition, isDragging } =
+    useSortable({ id });
+
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+    opacity: isDragging ? 0.5 : 1,
+  };
+
+  return (
+    <div
+      ref={setNodeRef}
+      style={style}
+      className='p-4 border rounded bg-white dark:bg-black dark:border-zinc-800 relative'
+    >
+      <div className='flex justify-between items-center mb-2'>
+        <div className='flex items-center gap-2'>
+          <button
+            {...attributes}
+            {...listeners}
+            className='cursor-grab active:cursor-grabbing p-1 text-gray-400 hover:text-primary transition-colors'
+            title='Drag to reorder'
+          >
+            <svg
+              xmlns='http://www.w3.org/2000/svg'
+              width='16'
+              height='16'
+              viewBox='0 0 24 24'
+              fill='none'
+              stroke='currentColor'
+              strokeWidth='2'
+              strokeLinecap='round'
+              strokeLinejoin='round'
+            >
+              <line x1='3' y1='12' x2='21' y2='12' />
+              <line x1='3' y1='6' x2='21' y2='6' />
+              <line x1='3' y1='18' x2='21' y2='18' />
+            </svg>
+          </button>
+          <h4 className='font-medium text-primary'>Item {index + 1}</h4>
+        </div>
+        <button
+          onClick={() => onDelete(index)}
+          className='p-1 text-gray-400 hover:text-red-500 transition-colors'
+          title='Remove'
+        >
+          <svg
+            xmlns='http://www.w3.org/2000/svg'
+            width='16'
+            height='16'
+            viewBox='0 0 24 24'
+            fill='none'
+            stroke='currentColor'
+            strokeWidth='2'
+            strokeLinecap='round'
+            strokeLinejoin='round'
+          >
+            <path d='M18 6 6 18' />
+            <path d='m6 6 12 12' />
+          </svg>
+        </button>
+      </div>
+      <div className='space-y-3'>
+        <div className='mb-4'>
+          <label className='block text-sm font-medium mb-1'>Title</label>
+          <input
+            type='text'
+            className='w-full p-2 border rounded dark:bg-zinc-800 dark:border-gray-700'
+            value={item.title}
+            onChange={(e) => onUpdate(index, 'title', e.target.value)}
+          />
+        </div>
+        <div className='mb-4'>
+          <label className='block text-sm font-medium mb-1'>Content</label>
+          <textarea
+            className='w-full p-2 border rounded dark:bg-zinc-800 dark:border-gray-700'
+            rows={3}
+            value={item.content}
+            onChange={(e) => onUpdate(index, 'content', e.target.value)}
+          />
         </div>
       </div>
     </div>
