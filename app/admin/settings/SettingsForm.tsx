@@ -250,10 +250,44 @@ export default function SettingsForm({
             {renderInput('Bio Text', 'bio', 'text', 4)}
 
             <h3 className='text-lg font-bold mt-8'>Images</h3>
-            {renderInput('Image 1 URL', 'images.img1')}
-            {renderInput('Image 2 URL', 'images.img2')}
-            {renderInput('Image 3 URL', 'images.img3')}
-            {renderInput('Image 4 URL', 'images.img4')}
+            <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
+              <div>
+                <label className='block text-sm font-medium mb-1'>
+                  Image 1
+                </label>
+                <ImageUpload
+                  value={settings.hero?.images?.img1 || ''}
+                  onChange={(url) => handleChange('hero', 'images.img1', url)}
+                />
+              </div>
+              <div>
+                <label className='block text-sm font-medium mb-1'>
+                  Image 2
+                </label>
+                <ImageUpload
+                  value={settings.hero?.images?.img2 || ''}
+                  onChange={(url) => handleChange('hero', 'images.img2', url)}
+                />
+              </div>
+              <div>
+                <label className='block text-sm font-medium mb-1'>
+                  Image 3
+                </label>
+                <ImageUpload
+                  value={settings.hero?.images?.img3 || ''}
+                  onChange={(url) => handleChange('hero', 'images.img3', url)}
+                />
+              </div>
+              <div>
+                <label className='block text-sm font-medium mb-1'>
+                  Image 4
+                </label>
+                <ImageUpload
+                  value={settings.hero?.images?.img4 || ''}
+                  onChange={(url) => handleChange('hero', 'images.img4', url)}
+                />
+              </div>
+            </div>
           </div>
         )}
 
@@ -291,9 +325,41 @@ export default function SettingsForm({
             </div>
 
             <h3 className='text-lg font-bold mt-8'>Images</h3>
-            {renderInput('Image 1', 'floatingItems.images.img1')}
-            {renderInput('Image 2', 'floatingItems.images.img2')}
-            {renderInput('Image 3', 'floatingItems.images.img3')}
+            <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
+              <div>
+                <label className='block text-sm font-medium mb-1'>
+                  Image 1
+                </label>
+                <ImageUpload
+                  value={settings.etcetra?.floatingItems?.images?.img1 || ''}
+                  onChange={(url) =>
+                    handleChange('etcetra', 'floatingItems.images.img1', url)
+                  }
+                />
+              </div>
+              <div>
+                <label className='block text-sm font-medium mb-1'>
+                  Image 2
+                </label>
+                <ImageUpload
+                  value={settings.etcetra?.floatingItems?.images?.img2 || ''}
+                  onChange={(url) =>
+                    handleChange('etcetra', 'floatingItems.images.img2', url)
+                  }
+                />
+              </div>
+              <div>
+                <label className='block text-sm font-medium mb-1'>
+                  Image 3
+                </label>
+                <ImageUpload
+                  value={settings.etcetra?.floatingItems?.images?.img3 || ''}
+                  onChange={(url) =>
+                    handleChange('etcetra', 'floatingItems.images.img3', url)
+                  }
+                />
+              </div>
+            </div>
           </div>
         )}
 
@@ -321,20 +387,60 @@ export default function SettingsForm({
             </div>
 
             <div className='bg-zinc-50 dark:bg-zinc-900 p-6 rounded-lg'>
-              <h3 className='text-lg font-bold mb-4 border-b pb-2 dark:border-zinc-700'>
-                Experience (Accordion)
-              </h3>
+              <div className='flex justify-between items-center mb-4 border-b pb-2 dark:border-zinc-700'>
+                <h3 className='text-lg font-bold'>
+                  Experience (Accordion)
+                </h3>
+                <button
+                  onClick={() => {
+                    const current = settings.about?.experience || [];
+                    handleChange('about', 'experience', [
+                      ...current,
+                      { title: '', content: '' },
+                    ]);
+                  }}
+                  className='text-sm bg-primary text-white px-3 py-1 rounded hover:bg-primary/90'
+                >
+                  + Add Item
+                </button>
+              </div>
               <div className='space-y-6'>
                 {(settings.about?.experience || []).map(
                   (item: any, index: number) => (
                     <div
                       key={index}
-                      className='p-4 border rounded bg-white dark:bg-black dark:border-zinc-800'
+                      className='p-4 border rounded bg-white dark:bg-black dark:border-zinc-800 relative'
                     >
                       <div className='flex justify-between items-center mb-2'>
                         <h4 className='font-medium text-primary'>
                           Item {index + 1}
                         </h4>
+                        <button
+                          onClick={() => {
+                            const current = [
+                              ...(settings.about?.experience || []),
+                            ];
+                            current.splice(index, 1);
+                            handleChange('about', 'experience', current);
+                          }}
+                          className='p-1 text-gray-400 hover:text-red-500 transition-colors'
+                          title='Remove'
+                        >
+                          <svg
+                            xmlns='http://www.w3.org/2000/svg'
+                            width='16'
+                            height='16'
+                            viewBox='0 0 24 24'
+                            fill='none'
+                            stroke='currentColor'
+                            strokeWidth='2'
+                            strokeLinecap='round'
+                            strokeLinejoin='round'
+                          >
+                            <path d='M18 6 6 18' />
+                            <path d='m6 6 12 12' />
+                          </svg>
+                        </button>
                       </div>
                       <div className='space-y-3'>
                         <div className='mb-4'>
